@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>代码神域：第129章：性能压力测试：极限负载下的表现 | potoior</title><meta name="author" content="potoior"><meta name="copyright" content="potoior"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="第129章：性能压力测试：极限负载下的表现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码神域：第129章：性能压力测试：极限负载下的表现">
+<meta property="og:url" content="http://example.com/2025/10/01/%E7%AC%AC129%E7%AB%A0%EF%BC%9A%E6%80%A7%E8%83%BD%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%EF%BC%9A%E6%9E%81%E9%99%90%E8%B4%9F%E8%BD%BD%E4%B8%8B%E7%9A%84%E8%A1%A8%E7%8E%B0/index.html">
+<meta property="og:site_name" content="potoior">
+<meta property="og:description" content="第129章：性能压力测试：极限负载下的表现">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/butterfly-icon.png">
+<meta property="article:published_time" content="2025-10-01T01:09:07.371Z">
+<meta property="article:modified_time" content="2025-10-01T00:47:41.000Z">
+<meta property="article:author" content="potoior">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "代码神域：第129章：性能压力测试：极限负载下的表现",
+  "url": "http://example.com/2025/10/01/%E7%AC%AC129%E7%AB%A0%EF%BC%9A%E6%80%A7%E8%83%BD%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%EF%BC%9A%E6%9E%81%E9%99%90%E8%B4%9F%E8%BD%BD%E4%B8%8B%E7%9A%84%E8%A1%A8%E7%8E%B0/",
+  "image": "http://example.com/img/butterfly-icon.png",
+  "datePublished": "2025-10-01T01:09:07.371Z",
+  "dateModified": "2025-10-01T00:47:41.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "potoior",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2025/10/01/%E7%AC%AC129%E7%AB%A0%EF%BC%9A%E6%80%A7%E8%83%BD%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%EF%BC%9A%E6%9E%81%E9%99%90%E8%B4%9F%E8%BD%BD%E4%B8%8B%E7%9A%84%E8%A1%A8%E7%8E%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const hour = new Date().getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (theme === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else theme === 'light' ? activateLightMode() : activateDarkMode()
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"top-right"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '代码神域：第129章：性能压力测试：极限负载下的表现',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.0.0"></head><body><div id="web_bg" style="background-image: url(/img/bg.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">136</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post type-代码神域" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">potoior</span></a><a class="nav-page-title" href="/"><span class="site-name">代码神域：第129章：性能压力测试：极限负载下的表现</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">代码神域：第129章：性能压力测试：极限负载下的表现</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-10-01T01:09:07.371Z" title="发表于 2025-10-01 09:09:07">2025-10-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-10-01T00:47:41.000Z" title="更新于 2025-10-01 08:47:41">2025-10-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%BB%A3%E7%A0%81%E7%A5%9E%E5%9F%9F/">代码神域</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">4.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;It has been&quot;,&quot;messageNext&quot;:&quot;days since the last update, the content of the article may be outdated.&quot;,&quot;postUpdate&quot;:&quot;2025-10-01 08:47:41&quot;}" hidden></div><h2><span id="引子极限挑战的前夜">引子：极限挑战的前夜</span></h2><p>周一的清晨，我站在迪克科技的落地窗前，望着窗外川流不息的车流，心中思绪万千。上周我们成功完成了星辰电商的架构重构，系统已经平稳运行了一周。但今天，我们将迎来一个更大的挑战——极限负载压力测试。</p>
+<p>“子烨，准备好了吗？”小温的声音从背后传来。</p>
+<p>我转过身，看到小温、小克和小迪都已经到了办公室，每个人的脸上都带着一丝紧张。</p>
+<p>“准备好了。”我点了点头，”今天的压力测试对我们来说至关重要，它将验证我们的架构设计是否真的能够支撑百万级并发用户。”</p>
+<p>“放心吧，我们已经做了充分的准备。”小克拍了拍胸脯，”监控系统已经搭建完成，Prometheus和Grafana都配置好了，我们可以实时监控系统的各项指标。”</p>
+<p>“性能测试脚本也已经编写完毕。”小迪补充道，”我们使用JMeter和Gatling工具，可以模拟百万级用户的并发请求。”</p>
+<p>“很好。”我看了看手表，”李经理应该快要到了，我们先去会议室准备一下。”</p>
+<h2><span id="第一章压力测试启动">第一章：压力测试启动</span></h2><p>上午9点，李经理准时来到了会议室。他看了看我们，表情严肃地说道：”今天的压力测试意义重大，不仅关系到我们团队的声誉，更关系到星辰电商下个月的促销活动能否顺利进行。我希望大家都能全力以赴。”</p>
+<p>“李经理，请放心，我们已经做好了充分的准备。”我说道，”我们的架构设计采用了Spring Cloud Alibaba微服务框架，集成了Nacos、Sentinel、Seata等组件，并且进行了分库分表和缓存优化。相信系统能够应对这次压力测试。”</p>
+<p>“很好。”李经理点了点头，”现在，我宣布，压力测试正式开始！”</p>
+<p>小迪立刻开始操作电脑，启动了压力测试工具。监控屏幕上，并发用户数开始逐渐上升：1万、5万、10万…</p>
+<p>“系统运行正常！”小克盯着监控屏幕，兴奋地说道，”CPU使用率30%，内存使用率40%，响应时间150ms！”</p>
+<p>“继续增加压力！”我说道。</p>
+<p>小迪调整了压力测试参数，并发用户数继续上升：20万、30万、40万…</p>
+<p>“系统仍然运行正常！”小克喊道，”各项指标都在正常范围内。”</p>
+<p>“看来我们的架构设计确实有效。”小温露出了欣慰的笑容。</p>
+<h2><span id="第二章第一次性能瓶颈">第二章：第一次性能瓶颈</span></h2><p>随着并发用户数继续上升到50万，系统的响应时间开始逐渐变长。</p>
+<p>“响应时间已经达到了300ms！”小克紧张地说道。</p>
+<p>“CPU使用率也上升到了60%！”小迪补充道。</p>
+<p>“看来我们遇到了第一个性能瓶颈。”我皱起了眉头，”我们需要立刻分析问题所在。”</p>
+<p>我们围在监控屏幕前，仔细查看各项指标。</p>
+<p>“数据库的查询响应时间明显增加。”小温指着监控图表说道，”特别是订单查询和商品列表查询这两个接口。”</p>
+<p>“这可能是缓存命中率不高导致的。”我说道，”我们需要优化缓存策略。”</p>
+<p>“我来检查一下Redis的缓存命中率。”小克立刻开始操作电脑。</p>
+<p>“缓存命中率只有60%，确实偏低。”小克说道，”特别是商品列表查询，缓存命中率只有40%。”</p>
+<p>“我们需要调整缓存的过期时间和缓存粒度。”我说道，”对于热点数据，我们可以设置更长的过期时间；对于商品列表查询，我们可以增加二级缓存或者采用分段缓存的策略。”</p>
+<p>“好的，我这就去调整。”小克点了点头，立刻开始修改配置。</p>
+<p>经过优化后，系统的响应时间逐渐下降到了200ms以内，缓存命中率也提升到了85%以上。</p>
+<p>“太好了！”小迪兴奋地说道，”我们成功解决了第一个性能瓶颈！”</p>
+<p>“继续增加压力！”我说道。</p>
+<h2><span id="第三章数据库的挑战">第三章：数据库的挑战</span></h2><p>当并发用户数上升到70万时，系统再次出现了性能问题。</p>
+<p>“数据库的连接池已经被耗尽！”小温喊道，”大量的数据库连接等待导致响应时间急剧增加。”</p>
+<p>“看来我们的数据库连接池配置不合理。”我说道，”我们需要增加数据库连接池的大小，同时优化数据库的查询性能。”</p>
+<p>“我来调整数据库连接池的配置。”小温立刻开始操作电脑，”同时，我们可以对一些高频查询的SQL语句进行优化。”</p>
+<p>“另外，我们可以考虑引入读写分离。”我补充道，”将读请求分发到从数据库，减轻主数据库的压力。”</p>
+<p>“但现在临时搭建读写分离可能来不及了。”小温皱了皱眉头。</p>
+<p>“我们可以先在应用层做一些优化，比如增加查询缓存，减少数据库的访问次数。”我说道，”同时，我们可以调整ShardingSphere的分片策略，让数据分布更加均匀。”</p>
+<p>“好的，我这就去做。”小温点了点头。</p>
+<p>经过一系列的优化，数据库的压力逐渐得到了缓解。系统的响应时间再次下降到了200ms以内，数据库连接池的使用率也保持在合理范围内。</p>
+<p>“继续增加压力！”我说道，”我们的目标是百万级并发！”</p>
+<h2><span id="第四章微服务通信的优化">第四章：微服务通信的优化</span></h2><p>当并发用户数接近80万时，系统的响应时间又开始上升。</p>
+<p>“服务间的调用延迟明显增加。”小克指着监控图表说道，”特别是订单服务调用商品服务和库存服务的延迟。”</p>
+<p>“这可能是服务间通信的问题。”我说道，”我们使用的是同步调用，在高并发下容易导致线程阻塞。”</p>
+<p>“我们可以考虑使用异步调用或者响应式编程来优化服务间的通信。”小温建议道。</p>
+<p>“但现在临时修改代码架构可能来不及了。”我皱了皱眉头，”我们需要找到更快速的优化方法。”</p>
+<p>“我们可以先调整服务的线程池配置，增加核心线程数和最大线程数。”小克说道，”同时，我们可以优化Sentinel的熔断和降级策略，避免服务雪崩。”</p>
+<p>“这个主意不错。”我点了点头，”我们还可以使用缓存来减少服务间的调用次数，比如订单服务可以缓存一些常用的商品信息。”</p>
+<p>“好的，我这就去调整。”小克立刻开始操作电脑。</p>
+<p>经过优化后，服务间的调用延迟明显减少，系统的响应时间也下降到了180ms以内。</p>
+<p>“太好了！”小迪兴奋地说道，”我们离百万级并发越来越近了！”</p>
+<h2><span id="第五章代码神域的智慧">第五章：代码神域的智慧</span></h2><p>当天晚上，我躺在床上，翻来覆去睡不着。白天的压力测试虽然取得了不错的成绩，但离我们的目标——百万级并发还有一定的差距。我知道，我们还需要进一步优化系统性能。</p>
+<p>“小子，还在为性能优化的事情烦恼吗？”突然，小wic的声音在我脑海中响起。</p>
+<p>“你怎么来了？”我惊讶地问道。</p>
+<p>“我感觉到你在为性能优化的事情烦恼。”小wic说道，”需要我的帮助吗？”</p>
+<p>“当然需要！”我迫不及待地说道，”我们的系统在80万并发时已经出现了性能瓶颈，你有什么好的优化建议吗？”</p>
+<p>“性能优化是一个系统性的工程，需要从多个维度进行优化。”小wic说道，”你们已经做了缓存优化、数据库优化和服务通信优化，但还有一些地方可以进一步优化。”</p>
+<p>“比如呢？”我问道。</p>
+<p>“比如，你们可以考虑引入CDN来加速静态资源的访问，减轻服务器的压力。”小wic说道，”另外，你们可以优化JVM参数，调整垃圾回收器的配置，减少GC停顿时间。”</p>
+<p>“还有吗？”我继续问道。</p>
+<p>“你们还可以使用分布式缓存来替代本地缓存，提高缓存的命中率和可靠性。”小wic说道，”另外，你们可以考虑使用消息队列来削峰填谷，避免系统在短时间内承受过大的压力。”</p>
+<p>“这些建议都很有价值。”我点了点头，”谢谢你，小wic。”</p>
+<p>“不用谢。”小wic的声音逐渐变得模糊，”记住，性能优化是一个持续的过程，没有最好，只有更好。”</p>
+<h2><span id="第六章最后的冲刺">第六章：最后的冲刺</span></h2><p>第二天早上，我早早地来到公司，将小wic的建议整理成了详细的优化方案。</p>
+<p>“各位，我有一些新的优化思路。”在团队会议上，我拿出了优化方案，”我们可以从以下几个方面进一步优化系统性能。”</p>
+<p>“首先，我们可以引入CDN来加速静态资源的访问。”我说道，”其次，我们可以优化JVM参数，调整垃圾回收器的配置。另外，我们还可以使用分布式缓存来替代本地缓存，使用消息队列来削峰填谷。”</p>
+<p>“这些优化措施听起来不错，但时间来得及吗？”小温担心地问道。</p>
+<p>“我们可以优先实施一些容易实现的优化措施。”我说道，”比如JVM参数优化和消息队列的引入，这些可以在短时间内完成。”</p>
+<p>“好的，我们现在就开始行动！”小克摩拳擦掌地说道。</p>
+<p>我们开始了最后的优化冲刺。小克负责优化JVM参数和引入消息队列，小温负责优化数据库性能，小迪负责调整压力测试脚本。我则负责整体的协调和监控工作。</p>
+<p>以下是我们优化的核心代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JVM参数优化</span></span><br><span class="line"><span class="comment">// -Xms8g -Xmx8g -Xmn4g -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m</span></span><br><span class="line"><span class="comment">// -XX:+UseG1GC -XX:MaxGCPauseMillis=50 -XX:InitiatingHeapOccupancyPercent=45</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 消息队列削峰填谷实现</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OrderMessageService</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RocketMQTemplate rocketMQTemplate;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> OrderService orderService;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 发送订单创建消息到消息队列</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sendCreateOrderMessage</span><span class="params">(OrderRequestDTO requestDTO)</span> &#123;</span><br><span class="line">        rocketMQTemplate.convertAndSend(<span class="string">&quot;order-create-queue&quot;</span>, requestDTO);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 消费订单创建消息</span></span><br><span class="line">    <span class="meta">@RocketMQMessageListener(topic = &quot;order-create-queue&quot;, consumerGroup = &quot;order-consumer-group&quot;)</span></span><br><span class="line">    <span class="meta">@Component</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OrderCreateConsumer</span> <span class="keyword">implements</span> <span class="title class_">RocketMQListener</span>&lt;OrderRequestDTO&gt; &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onMessage</span><span class="params">(OrderRequestDTO requestDTO)</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// 异步创建订单</span></span><br><span class="line">                orderService.createOrderAsync(requestDTO);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                log.error(<span class="string">&quot;异步创建订单失败：&#123;&#125;&quot;</span>, e.getMessage());</span><br><span class="line">                <span class="comment">// 可以将失败的消息发送到重试队列</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 分布式缓存优化</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RedisClusterConfig</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> RedisTemplate&lt;String, Object&gt; <span class="title function_">redisTemplate</span><span class="params">(RedisConnectionFactory redisConnectionFactory)</span> &#123;</span><br><span class="line">        RedisTemplate&lt;String, Object&gt; template = <span class="keyword">new</span> <span class="title class_">RedisTemplate</span>&lt;&gt;();</span><br><span class="line">        template.setConnectionFactory(redisConnectionFactory);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 设置key的序列化器</span></span><br><span class="line">        template.setKeySerializer(<span class="keyword">new</span> <span class="title class_">StringRedisSerializer</span>());</span><br><span class="line">        <span class="comment">// 设置value的序列化器</span></span><br><span class="line">        template.setValueSerializer(<span class="keyword">new</span> <span class="title class_">GenericJackson2JsonRedisSerializer</span>());</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 配置Redis集群</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> RedisConnectionFactory <span class="title function_">redisConnectionFactory</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">RedisClusterConfiguration</span> <span class="variable">clusterConfig</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RedisClusterConfiguration</span>(</span><br><span class="line">                Arrays.asList(<span class="string">&quot;redis-node1:6379&quot;</span>, <span class="string">&quot;redis-node2:6379&quot;</span>, <span class="string">&quot;redis-node3:6379&quot;</span>));</span><br><span class="line">        clusterConfig.setMaxRedirects(<span class="number">3</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="type">LettuceConnectionFactory</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">LettuceConnectionFactory</span>(clusterConfig);</span><br><span class="line">        factory.afterPropertiesSet();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> factory;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据库性能优化 - SQL查询优化示例</span></span><br><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ProductMapper</span> &#123;</span><br><span class="line">    <span class="comment">// 优化前的SQL</span></span><br><span class="line">    <span class="comment">// @Select(&quot;SELECT * FROM product WHERE category_id = #&#123;categoryId&#125; ORDER BY create_time DESC LIMIT #&#123;pageSize&#125; OFFSET #&#123;offset&#125;&quot;)</span></span><br><span class="line">    <span class="comment">// List&lt;ProductDO&gt; selectByCategoryId(Long categoryId, Integer pageSize, Integer offset);</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 优化后的SQL - 添加索引，减少查询字段</span></span><br><span class="line">    <span class="meta">@Select(&quot;SELECT id, name, price, image FROM product WHERE category_id = #&#123;categoryId&#125; ORDER BY create_time DESC LIMIT #&#123;pageSize&#125; OFFSET #&#123;offset&#125;&quot;)</span></span><br><span class="line">    List&lt;ProductDO&gt; <span class="title function_">selectByCategoryId</span><span class="params">(Long categoryId, Integer pageSize, Integer offset)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 服务调用优化 - 使用CompletableFuture异步调用</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OrderServiceOptimization</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ProductClient productClient;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> InventoryClient inventoryClient;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> CompletableFuture&lt;ProductDTO&gt; <span class="title function_">getProductInfoAsync</span><span class="params">(Long productId)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> CompletableFuture.supplyAsync(() -&gt; productClient.getProductById(productId));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> CompletableFuture&lt;Boolean&gt; <span class="title function_">checkStockAsync</span><span class="params">(Long productId, Integer quantity)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> CompletableFuture.supplyAsync(() -&gt; inventoryClient.checkStock(productId, quantity));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> OrderDTO <span class="title function_">createOrderWithAsyncCall</span><span class="params">(OrderRequestDTO requestDTO)</span> &#123;</span><br><span class="line">        <span class="comment">// 异步获取商品信息和检查库存</span></span><br><span class="line">        CompletableFuture&lt;ProductDTO&gt; productFuture = getProductInfoAsync(requestDTO.getProductId());</span><br><span class="line">        CompletableFuture&lt;Boolean&gt; stockFuture = checkStockAsync(requestDTO.getProductId(), requestDTO.getQuantity());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 等待所有异步操作完成</span></span><br><span class="line">        CompletableFuture&lt;Void&gt; allOf = CompletableFuture.allOf(productFuture, stockFuture);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 获取异步操作的结果</span></span><br><span class="line">            <span class="type">ProductDTO</span> <span class="variable">productDTO</span> <span class="operator">=</span> productFuture.get();</span><br><span class="line">            <span class="type">Boolean</span> <span class="variable">hasStock</span> <span class="operator">=</span> stockFuture.get();</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 后续处理...</span></span><br><span class="line">            </span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BusinessException</span>(<span class="string">&quot;创建订单失败&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 返回结果...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="第七章成功突破百万级并发">第七章：成功突破百万级并发</span></h2><p>经过三天的紧张优化，我们终于迎来了最后的压力测试。</p>
+<p>“李经理，我们已经完成了所有的优化措施，现在可以开始最后的压力测试了。”我向李经理汇报。</p>
+<p>“很好。”李经理点了点头，”开始吧！”</p>
+<p>小迪启动了压力测试工具，监控屏幕上的并发用户数开始逐渐上升：10万、20万、30万…</p>
+<p>“系统运行正常！”小克喊道，”各项指标都在正常范围内。”</p>
+<p>“继续增加压力！”我说道。</p>
+<p>并发用户数继续上升：50万、70万、90万…</p>
+<p>“现在的并发用户数已经达到了95万！”小迪兴奋地说道，”系统仍然运行正常！”</p>
+<p>“继续增加！”我大声说道，”我们的目标是百万级！”</p>
+<p>终于，监控屏幕上的并发用户数突破了100万！</p>
+<p>“成功了！”小克激动地跳了起来，”并发用户数达到了100万，系统运行正常！”</p>
+<p>“CPU使用率75%，内存使用率80%，响应时间200ms！”小迪喊道，”所有指标都符合预期！”</p>
+<p>“太好了！”小温也露出了欣慰的笑容，”我们成功支撑了百万级并发用户！”</p>
+<p>我望着监控屏幕上跳动的数字，心中充满了自豪和成就感。经过团队的共同努力，我们终于成功完成了这次极限负载压力测试，验证了我们的架构设计的可靠性和高性能。</p>
+<h2><span id="第八章成长的感悟">第八章：成长的感悟</span></h2><p>压力测试结束后，我们团队受到了公司的表彰。张总在公司例会上，对我们的工作给予了高度评价。</p>
+<p>“这次的极限负载压力测试，充分展示了我们团队的技术实力和协作精神。”张总说道，”能够在如此短的时间内，完成系统的架构重构和性能优化，并成功支撑百万级并发用户，这是一个了不起的成就！”</p>
+<p>“特别是子烨，作为这次项目的架构师，表现得非常出色。”张总继续说道，”他不仅在技术上有很深的造诣，而且在团队管理和协调方面也展现出了非凡的能力。”</p>
+<p>会后，李经理把我叫到了他的办公室。</p>
+<p>“子烨，这次的压力测试，你表现得非常出色。”李经理说道，”公司决定给你加薪，并晋升你为技术专家。”</p>
+<p>“真的吗？”我惊喜地问道。</p>
+<p>“当然是真的。”李经理笑着点了点头，”你的技术能力和领导能力都已经达到了技术专家的水平。继续努力，我相信你会成为一名优秀的技术领袖。”</p>
+<p>“谢谢李经理的信任！”我激动地说道。</p>
+<p>当天晚上，我再次进入了代码神域。小wic已经在那里等着我了。</p>
+<p>“恭喜你，小子！”小wic笑着说道，”你成功地通过了这次极限负载压力测试的挑战。”</p>
+<p>“谢谢你，小wic。”我真诚地说道，”如果没有你的帮助和指导，我不可能完成这个任务。”</p>
+<p>“不用谢我，这都是你自己努力的结果。”小wic说道，”通过这次挑战，你不仅提升了自己的性能优化能力，更重要的是，你学会了如何从系统层面思考问题，找到性能瓶颈的根本原因。”</p>
+<p>“是的，我明白了。”我点了点头，”性能优化不仅仅是调整参数和优化代码，更重要的是理解系统的整体架构，找到性能瓶颈的根本原因，然后从多个维度进行优化。”</p>
+<p>“很好，你真的成长了。”小wic的声音里充满了欣慰，”相信在不久的将来，你一定能够成为一名真正的性能优化大师。”</p>
+<p>我望着代码神域中璀璨的星空，心中充满了信心。未来的路还很长，但我已经准备好迎接更多的挑战！</p>
+<p>（本章完）</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">potoior</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2025/10/01/%E7%AC%AC129%E7%AB%A0%EF%BC%9A%E6%80%A7%E8%83%BD%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%EF%BC%9A%E6%9E%81%E9%99%90%E8%B4%9F%E8%BD%BD%E4%B8%8B%E7%9A%84%E8%A1%A8%E7%8E%B0/">http://example.com/2025/10/01/%E7%AC%AC129%E7%AB%A0%EF%BC%9A%E6%80%A7%E8%83%BD%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95%EF%BC%9A%E6%9E%81%E9%99%90%E8%B4%9F%E8%BD%BD%E4%B8%8B%E7%9A%84%E8%A1%A8%E7%8E%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://example.com" target="_blank">potoior</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/10/01/%E7%AC%AC130%E7%AB%A0%EF%BC%9A%E5%AE%89%E5%85%A8%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83%EF%BC%9A%E5%85%A8%E6%96%B9%E4%BD%8D%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/" title="代码神域：第130章：安全攻防演练：全方位安全测试"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">代码神域：第130章：安全攻防演练：全方位安全测试</div></div><div class="info-2"><div class="info-item-1">第130章：安全攻防演练：全方位安全测试引子：安全警报凌晨三点，迪克科技的办公大楼依然灯火通明。技术部的大屏幕上，各种监控指标正在闪烁，红色警报灯不断亮起。 “张工，安全防护系统触发了最高级别的预警！”小迪的声音从操作台前传来，她的手指在键盘上飞快地敲击着，屏幕上显示着异常的访问日志。 张子烨揉了揉眼睛，快步走到监控大屏前。作为即将接受全栈架构师终极考验的核心成员，他已经连续加班三天了。”什么情况？”他的声音中带着一丝疲惫，但更多的是警觉。 李经理从会议室走出来，手里拿着一份紧急文件：”刚刚接到总部通知，我们将作为集团试点，参加一场为期48小时的真实网络安全攻防演练。攻击方是专业的白帽子黑客团队，他们的目标是突破我们的防御系统，获取核心数据。”他的目光扫过在场的每一个人，”这不仅仅是一场演练，更是对我们系统安全性的终极考验。” 危机降临：攻防演练开始会议室里，气氛异常紧张。技术团队的核心成员围坐在会议桌前，盯着李经理手里的演练规则文件。 “攻击时间从明天早上八点开始，持续48小时。”李经理的声音低沉有力，”对方可以使用任何合法的攻击手段，包括但不限于SQL注入、XSS攻击、CSR...</div></div></div></a><a class="pagination-related" href="/2025/10/01/%E7%AC%AC128%E7%AB%A0%EF%BC%9A%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E6%8C%91%E6%88%98%EF%BC%9A%E5%A4%8D%E6%9D%82%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF%E6%A8%A1%E6%8B%9F/" title="代码神域：第128章：架构设计挑战：复杂业务场景模拟"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">代码神域：第128章：架构设计挑战：复杂业务场景模拟</div></div><div class="info-2"><div class="info-item-1">引子：紧急任务周一早上，我刚走进迪克科技的办公室，就发现气氛有些异常。同事们都在紧张地忙碌着，李经理的办公室门紧闭，时不时传来激烈的讨论声。 “子烨，你可算来了！”小温看到我，立刻快步走了过来，脸上带着焦虑的表情。 “怎么了？发生什么事了？”我问道。 “大客户那边出了问题。”小温压低声音说道，”他们的电商平台在促销期间崩溃了，现在需要我们紧急帮助重构架构。李经理正在和张总商量对策呢。” 我刚想问更多细节，李经理的办公室门突然打开了。李经理探出头来，看到我后，立刻招手让我进去。 “子烨，快进来！”李经理的声音里带着一丝急切。 第一章：危机降临走进李经理的办公室，我看到张总也在，他的眉头紧锁，正在看一份文档。 “子烨，你来了正好。”张总抬起头，把文档推到我面前，”这是星辰电商的系统崩溃报告，你先看看。” 我接过文档，快速浏览了一遍。星辰电商是迪克科技的重要客户，他们在上周末的促销活动中，系统突然崩溃，导致了巨大的经济损失和用户流失。 “他们的系统是传统的单体架构，在高并发下完全扛不住。”张总说道，”现在客户要求我们在两周内帮助他们重构为微服务架构，确保下一次促销活动顺利进行。” “两...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">potoior</div><div class="author-info-description">一位半栈工程师</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">136</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/potoior"><i class="fab fa-github"></i><span>出发咯</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/potoior" target="_blank" title=""><i class="GitHub"></i></a><a class="social-icon" href="mailto:2986486901@qq.com" target="_blank" title=""><i class="Email"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">引子：极限挑战的前夜</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">第一章：压力测试启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">第二章：第一次性能瓶颈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">第三章：数据库的挑战</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">第四章：微服务通信的优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">第五章：代码神域的智慧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">第六章：最后的冲刺</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">第七章：成功突破百万级并发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">第八章：成长的感悟</span></a></li></ol></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 By potoior</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.0.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="30" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

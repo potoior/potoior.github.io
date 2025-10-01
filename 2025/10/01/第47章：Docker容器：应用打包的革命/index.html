@@ -1,0 +1,314 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>代码神域：第47章：Docker容器：应用打包的革命 | potoior</title><meta name="author" content="potoior"><meta name="copyright" content="potoior"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="第47章：Docker容器：应用打包的革命">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码神域：第47章：Docker容器：应用打包的革命">
+<meta property="og:url" content="http://example.com/2025/10/01/%E7%AC%AC47%E7%AB%A0%EF%BC%9ADocker%E5%AE%B9%E5%99%A8%EF%BC%9A%E5%BA%94%E7%94%A8%E6%89%93%E5%8C%85%E7%9A%84%E9%9D%A9%E5%91%BD/index.html">
+<meta property="og:site_name" content="potoior">
+<meta property="og:description" content="第47章：Docker容器：应用打包的革命">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/butterfly-icon.png">
+<meta property="article:published_time" content="2025-10-01T01:09:05.368Z">
+<meta property="article:modified_time" content="2025-10-01T00:47:41.000Z">
+<meta property="article:author" content="potoior">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "代码神域：第47章：Docker容器：应用打包的革命",
+  "url": "http://example.com/2025/10/01/%E7%AC%AC47%E7%AB%A0%EF%BC%9ADocker%E5%AE%B9%E5%99%A8%EF%BC%9A%E5%BA%94%E7%94%A8%E6%89%93%E5%8C%85%E7%9A%84%E9%9D%A9%E5%91%BD/",
+  "image": "http://example.com/img/butterfly-icon.png",
+  "datePublished": "2025-10-01T01:09:05.368Z",
+  "dateModified": "2025-10-01T00:47:41.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "potoior",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2025/10/01/%E7%AC%AC47%E7%AB%A0%EF%BC%9ADocker%E5%AE%B9%E5%99%A8%EF%BC%9A%E5%BA%94%E7%94%A8%E6%89%93%E5%8C%85%E7%9A%84%E9%9D%A9%E5%91%BD/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const hour = new Date().getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (theme === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else theme === 'light' ? activateLightMode() : activateDarkMode()
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"top-right"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '代码神域：第47章：Docker容器：应用打包的革命',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.0.0"></head><body><div id="web_bg" style="background-image: url(/img/bg.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">136</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post type-代码神域" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">potoior</span></a><a class="nav-page-title" href="/"><span class="site-name">代码神域：第47章：Docker容器：应用打包的革命</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">代码神域：第47章：Docker容器：应用打包的革命</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-10-01T01:09:05.368Z" title="发表于 2025-10-01 09:09:05">2025-10-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-10-01T00:47:41.000Z" title="更新于 2025-10-01 08:47:41">2025-10-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%BB%A3%E7%A0%81%E7%A5%9E%E5%9F%9F/">代码神域</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;It has been&quot;,&quot;messageNext&quot;:&quot;days since the last update, the content of the article may be outdated.&quot;,&quot;postUpdate&quot;:&quot;2025-10-01 08:47:41&quot;}" hidden></div><h1><span id="第47章docker容器应用打包的革命">第47章：Docker容器：应用打包的革命</span></h1><h2><span id="章节概述">章节概述</span></h2><p><strong>本章字数</strong>：13,200字</p>
+<p><strong>核心冲突</strong>：迪克商城项目部署环境复杂，开发、测试、生产环境不一致导致频繁出现”在我这里能运行”的问题，团队急需统一的部署解决方案。</p>
+<p><strong>双线叙事</strong>：</p>
+<ul>
+<li><strong>容器神殿</strong>：张子烨在代码神域探索容器化技术的神秘殿堂，学习Docker的核心概念和最佳实践</li>
+<li><strong>现实开发</strong>：团队在迪克科技公司实际应用Docker技术，解决多环境部署一致性问题</li>
+</ul>
+<p><strong>技术重点</strong>：Docker基础概念、镜像构建、容器编排、Docker Compose实战应用</p>
+<h2><span id="生动对话场景">生动对话场景</span></h2><h3><span id="容器神殿的智慧对话">容器神殿的智慧对话</span></h3><p><strong>小wic</strong>（站在由无数容器组成的宏伟殿堂前）：”子烨，欢迎来到容器神殿！这里存放着应用部署的革命性技术——Docker。”</p>
+<p><strong>张子烨</strong>（惊叹地看着四周漂浮的容器镜像）：”这些就是容器吗？看起来比虚拟机轻量多了！”</p>
+<p><strong>小wic</strong>：”没错！容器就像是标准化的货运集装箱，无论你的应用是什么语言、什么框架，都可以打包成统一的格式，在任何支持Docker的环境中运行。”</p>
+<p><strong>张子烨</strong>：”那我们的迪克商城项目也能用容器部署吗？最近部署问题可把我们折腾坏了。”</p>
+<p><strong>小wic</strong>：”这正是我带你来这里的目的。让我们从基础开始，一步步掌握容器化部署的艺术。”</p>
+<h3><span id="团队紧急会议">团队紧急会议</span></h3><p><strong>李经理</strong>（表情严肃）：”各位，客户投诉又来了！测试环境正常的功能，到了生产环境就出问题。这种环境不一致的问题必须解决！”</p>
+<p><strong>小温</strong>：”经理，我建议采用Docker容器化方案。这样我们可以确保开发、测试、生产环境完全一致。”</p>
+<p><strong>小克</strong>（运维专家）：”我支持！Docker的镜像机制可以完美解决环境依赖问题。”</p>
+<p><strong>张子烨</strong>：”我在代码神域刚刚学习了Docker技术，我们可以立即开始实践！”</p>
+<p><strong>小迪</strong>：”那测试环境也要容器化吗？这样我就能更准确地模拟生产环境了。”</p>
+<h3><span id="技术实现讨论">技术实现讨论</span></h3><p><strong>张子烨</strong>：”我们先从迪克商城的后端服务开始容器化。小温，你的用户服务依赖哪些环境？”</p>
+<p><strong>小温</strong>：”需要Java 11、MySQL驱动、Redis客户端，还有我们的配置文件。”</p>
+<p><strong>小克</strong>：”我们可以用多阶段构建来优化镜像大小，基础镜像用openjdk:11-jre-slim。”</p>
+<p><strong>小迪</strong>：”那数据库和Redis呢？也要容器化吗？”</p>
+<p><strong>张子烨</strong>：”当然！用Docker Compose可以一键启动整个服务栈。”</p>
+<h3><span id="部署成功庆祝">部署成功庆祝</span></h3><p><strong>李经理</strong>（看着监控面板上的绿色状态）：”太棒了！第一次部署这么顺利，没有出现任何环境问题！”</p>
+<p><strong>小温</strong>：”Docker真的解决了大问题，现在开发效率提升了很多。”</p>
+<p><strong>小克</strong>：”而且运维也轻松了，再也不用担心环境配置差异。”</p>
+<p><strong>张子烨</strong>：”这只是开始，我们还可以用Kubernetes实现更高级的容器编排。”</p>
+<p><strong>小wic</strong>（在张子烨脑海中）：”子烨，你已经掌握了容器化的精髓。记住，标准化是技术进步的基石。”</p>
+<h2><span id="docker容器基础">Docker容器基础</span></h2><h3><span id="核心概念解析">核心概念解析</span></h3><p><strong>容器与虚拟机的区别</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">虚拟机：硬件虚拟化，每个VM有完整的操作系统</span><br><span class="line">容器：操作系统级虚拟化，共享主机内核，更加轻量</span><br></pre></td></tr></table></figure>
+
+<p><strong>Docker三大核心</strong></p>
+<ul>
+<li><strong>镜像（Image）</strong>：应用的打包格式，包含运行所需的一切</li>
+<li><strong>容器（Container）</strong>：镜像的运行实例</li>
+<li><strong>仓库（Registry）</strong>：镜像的存储和分发中心</li>
+</ul>
+<h3><span id="基础命令实战">基础命令实战</span></h3><p><strong>镜像操作命令</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拉取镜像</span></span><br><span class="line">docker pull nginx:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看本地镜像</span></span><br><span class="line">docker images</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除镜像</span></span><br><span class="line">docker rmi nginx:latest</span><br></pre></td></tr></table></figure>
+
+<p><strong>容器生命周期管理</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 运行容器</span></span><br><span class="line">docker run -d --name my-nginx -p 80:80 nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看运行中的容器</span></span><br><span class="line">docker ps</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止容器</span></span><br><span class="line">docker stop my-nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动已停止的容器</span></span><br><span class="line">docker start my-nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除容器</span></span><br><span class="line">docker <span class="built_in">rm</span> my-nginx</span><br></pre></td></tr></table></figure>
+
+<h2><span id="实战演练迪克商城容器化">实战演练：迪克商城容器化</span></h2><h3><span id="后端服务dockerfile">后端服务Dockerfile</span></h3><p><strong>用户服务Dockerfile示例</strong></p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 多阶段构建：构建阶段</span></span><br><span class="line"><span class="keyword">FROM</span> openjdk:<span class="number">11</span>-jdk-slim as builder</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制Maven配置文件</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> pom.xml .</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> src ./src</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装Maven并构建</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; apt-get install -y maven</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> mvn clean package -DskipTests</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行阶段</span></span><br><span class="line"><span class="keyword">FROM</span> openjdk:<span class="number">11</span>-jre-slim</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制构建产物</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=builder /app/target/user-service-1.0.0.jar app.jar</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建非root用户</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> groupadd -r spring &amp;&amp; useradd -r -g spring spring</span></span><br><span class="line"><span class="keyword">USER</span> spring</span><br><span class="line"></span><br><span class="line"><span class="comment"># 暴露端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动命令</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="string">&quot;java&quot;</span>, <span class="string">&quot;-jar&quot;</span>, <span class="string">&quot;app.jar&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<h3><span id="数据库服务配置">数据库服务配置</span></h3><p><strong>MySQL Docker配置</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker-compose.yml片段</span></span><br><span class="line"><span class="attr">mysql:</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">mysql:8.0</span></span><br><span class="line">  <span class="attr">container_name:</span> <span class="string">dike_mysql</span></span><br><span class="line">  <span class="attr">environment:</span></span><br><span class="line">    <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">root123456</span></span><br><span class="line">    <span class="attr">MYSQL_DATABASE:</span> <span class="string">dike_mall</span></span><br><span class="line">    <span class="attr">MYSQL_USER:</span> <span class="string">dike_user</span></span><br><span class="line">    <span class="attr">MYSQL_PASSWORD:</span> <span class="string">user123456</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">&quot;3306:3306&quot;</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">mysql_data:/var/lib/mysql</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">./config/mysql/my.cnf:/etc/mysql/conf.d/my.cnf</span></span><br><span class="line">  <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br></pre></td></tr></table></figure>
+
+<h3><span id="redis缓存服务">Redis缓存服务</span></h3><p><strong>Redis容器配置</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">redis:</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">redis:6.2-alpine</span></span><br><span class="line">  <span class="attr">container_name:</span> <span class="string">dike_redis</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">&quot;6379:6379&quot;</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">redis_data:/data</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">./config/redis/redis.conf:/etc/redis/redis.conf</span></span><br><span class="line">  <span class="attr">command:</span> <span class="string">redis-server</span> <span class="string">/etc/redis/redis.conf</span></span><br><span class="line">  <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br></pre></td></tr></table></figure>
+
+<h2><span id="docker-compose完整配置">Docker Compose完整配置</span></h2><h3><span id="迪克商城完整服务栈">迪克商城完整服务栈</span></h3><p><strong>docker-compose.yml</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.8&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="comment"># 用户服务</span></span><br><span class="line">  <span class="attr">user-service:</span></span><br><span class="line">    <span class="attr">build:</span> </span><br><span class="line">      <span class="attr">context:</span> <span class="string">./user-service</span></span><br><span class="line">      <span class="attr">dockerfile:</span> <span class="string">Dockerfile</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dike_user_service</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8081:8080&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_PROFILES_ACTIVE=docker</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_HOST=mysql</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">REDIS_HOST=redis</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mysql</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">redis</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">dike_network</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 商品服务</span></span><br><span class="line">  <span class="attr">product-service:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">./product-service</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dike_product_service</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8082:8080&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_PROFILES_ACTIVE=docker</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mysql</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">dike_network</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Nginx网关</span></span><br><span class="line">  <span class="attr">nginx:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:alpine</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dike_nginx</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;80:80&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;443:443&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./config/nginx/nginx.conf:/etc/nginx/nginx.conf</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./config/nginx/conf.d:/etc/nginx/conf.d</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./logs/nginx:/var/log/nginx</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">user-service</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">product-service</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">dike_network</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># MySQL数据库</span></span><br><span class="line">  <span class="attr">mysql:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mysql:8.0</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dike_mysql</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">root123456</span></span><br><span class="line">      <span class="attr">MYSQL_DATABASE:</span> <span class="string">dike_mall</span></span><br><span class="line">      <span class="attr">MYSQL_USER:</span> <span class="string">dike_user</span></span><br><span class="line">      <span class="attr">MYSQL_PASSWORD:</span> <span class="string">user123456</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;3306:3306&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mysql_data:/var/lib/mysql</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./config/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">dike_network</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Redis缓存</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis:6.2-alpine</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dike_redis</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;6379:6379&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">redis_data:/data</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">redis-server</span> <span class="string">--appendonly</span> <span class="literal">yes</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">dike_network</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">mysql_data:</span></span><br><span class="line">  <span class="attr">redis_data:</span></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">dike_network:</span></span><br><span class="line">    <span class="attr">driver:</span> <span class="string">bridge</span></span><br></pre></td></tr></table></figure>
+
+<h3><span id="服务启动与管理脚本">服务启动与管理脚本</span></h3><p><strong>启动脚本</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># start-services.sh</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;正在启动迪克商城服务栈...&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建镜像</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;构建服务镜像...&quot;</span></span><br><span class="line">docker-compose build</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;启动所有服务...&quot;</span></span><br><span class="line">docker-compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查服务状态</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;检查服务状态...&quot;</span></span><br><span class="line">docker-compose ps</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;服务启动完成！&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;访问地址：http://localhost&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>停止脚本</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># stop-services.sh</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;正在停止迪克商城服务栈...&quot;</span></span><br><span class="line"></span><br><span class="line">docker-compose down</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;服务已停止！&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2><span id="技术要点深入">技术要点深入</span></h2><h3><span id="镜像优化策略">镜像优化策略</span></h3><p><strong>多阶段构建的优势</strong></p>
+<ul>
+<li>减小最终镜像大小</li>
+<li>提高安全性（不包含构建工具）</li>
+<li>加快镜像构建速度</li>
+</ul>
+<p><strong>.dockerignore文件配置</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 忽略不必要的文件</span><br><span class="line">.git</span><br><span class="line">.gitignore</span><br><span class="line">README.md</span><br><span class="line">target/</span><br><span class="line">*.log</span><br><span class="line">.idea</span><br><span class="line">*.iml</span><br></pre></td></tr></table></figure>
+
+<h3><span id="容器网络配置">容器网络配置</span></h3><p><strong>自定义网络的优势</strong></p>
+<ul>
+<li>服务间通信更加安全</li>
+<li>DNS自动服务发现</li>
+<li>网络隔离提高安全性</li>
+</ul>
+<p><strong>网络配置示例</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建自定义网络</span></span><br><span class="line">docker network create dike_network</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看网络详情</span></span><br><span class="line">docker network inspect dike_network</span><br></pre></td></tr></table></figure>
+
+<h3><span id="数据持久化策略">数据持久化策略</span></h3><p><strong>数据卷类型选择</strong></p>
+<ul>
+<li><strong>绑定挂载</strong>：开发环境，方便修改</li>
+<li><strong>命名卷</strong>：生产环境，数据持久化</li>
+<li><strong>临时文件系统</strong>：临时数据，不持久化</li>
+</ul>
+<p><strong>数据备份脚本</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># backup-data.sh</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;开始备份数据库...&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份MySQL</span></span><br><span class="line">docker <span class="built_in">exec</span> dike_mysql mysqldump -u root -proot123456 dike_mall &gt; backup/mysql_$(<span class="built_in">date</span> +%Y%m%d).sql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份Redis</span></span><br><span class="line">docker <span class="built_in">exec</span> dike_redis redis-cli save</span><br><span class="line"><span class="built_in">cp</span> -r /var/lib/docker/volumes/dike_mall_redis_data backup/redis_$(<span class="built_in">date</span> +%Y%m%d)</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;数据备份完成！&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2><span id="团队分工协作">团队分工协作</span></h2><h3><span id="容器化任务分配">容器化任务分配</span></h3><p><strong>张子烨</strong>（架构设计）：</p>
+<ul>
+<li>设计整体容器化架构</li>
+<li>编写Docker Compose配置</li>
+<li>制定镜像构建规范</li>
+</ul>
+<p><strong>小温</strong>（后端服务）：</p>
+<ul>
+<li>优化后端服务Dockerfile</li>
+<li>配置服务间网络通信</li>
+<li>实现健康检查机制</li>
+</ul>
+<p><strong>小克</strong>（运维部署）：</p>
+<ul>
+<li>配置生产环境Docker</li>
+<li>设置监控和日志收集</li>
+<li>优化容器资源限制</li>
+</ul>
+<p><strong>小迪</strong>（测试验证）：</p>
+<ul>
+<li>验证多环境一致性</li>
+<li>测试服务高可用性</li>
+<li>验证数据持久化</li>
+</ul>
+<h3><span id="团队协作控制器">团队协作控制器</span></h3><p><strong>团队会议纪要</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DockerizationMeeting</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">String</span> <span class="variable">meetingTopic</span> <span class="operator">=</span> <span class="string">&quot;迪克商城容器化部署方案评审&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">LocalDateTime</span> <span class="variable">meetingTime</span> <span class="operator">=</span> LocalDateTime.now();</span><br><span class="line">    <span class="keyword">private</span> List&lt;TeamMember&gt; participants = Arrays.asList(</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">TeamMember</span>(<span class="string">&quot;张子烨&quot;</span>, <span class="string">&quot;架构设计&quot;</span>),</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">TeamMember</span>(<span class="string">&quot;小温&quot;</span>, <span class="string">&quot;后端服务&quot;</span>),</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">TeamMember</span>(<span class="string">&quot;小克&quot;</span>, <span class="string">&quot;运维部署&quot;</span>), </span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">TeamMember</span>(<span class="string">&quot;小迪&quot;</span>, <span class="string">&quot;测试验证&quot;</span>)</span><br><span class="line">    );</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">reviewDockerComposeConfig</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;=== 容器化方案评审会议 ===&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;主题：&quot;</span> + meetingTopic);</span><br><span class="line">        System.out.println(<span class="string">&quot;时间：&quot;</span> + meetingTime);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (TeamMember member : participants) &#123;</span><br><span class="line">            System.out.println(member.getName() + <span class="string">&quot; 负责：&quot;</span> + member.getResponsibility());</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        System.out.println(<span class="string">&quot;评审要点：&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;1. 服务依赖关系是否合理&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;2. 资源限制配置是否适当&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;3. 数据持久化方案是否可靠&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;4. 网络安全性是否达标&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="技术要点总结">技术要点总结</span></h2><h3><span id="docker核心价值">Docker核心价值</span></h3><ol>
+<li><strong>环境一致性</strong>：开发、测试、生产环境完全一致</li>
+<li><strong>快速部署</strong>：镜像一次构建，到处运行</li>
+<li><strong>资源隔离</strong>：每个容器独立运行，互不干扰</li>
+<li><strong>弹性伸缩</strong>：根据负载快速扩展或缩减实例</li>
+</ol>
+<h3><span id="最佳实践要点">最佳实践要点</span></h3><ol>
+<li><strong>使用多阶段构建</strong>优化镜像大小</li>
+<li><strong>指定非root用户</strong>运行容器提高安全性</li>
+<li><strong>合理配置资源限制</strong>防止单个容器耗尽资源</li>
+<li><strong>使用.dockerignore</strong>忽略不必要的文件</li>
+<li><strong>配置健康检查</strong>确保服务可用性</li>
+</ol>
+<h2><span id="成长收获">成长收获</span></h2><h3><span id="技术能力提升">技术能力提升</span></h3><ul>
+<li>掌握了Docker容器化技术的核心概念</li>
+<li>学会了多阶段构建优化镜像大小</li>
+<li>理解了容器网络和数据持久化原理</li>
+<li>能够使用Docker Compose编排复杂应用</li>
+</ul>
+<h3><span id="团队协作收获">团队协作收获</span></h3><ul>
+<li>体验了标准化部署带来的效率提升</li>
+<li>学会了在团队中推广新技术的方法</li>
+<li>理解了运维和开发协作的重要性</li>
+<li>掌握了技术方案评审和优化的流程</li>
+</ul>
+<h3><span id="问题解决能力">问题解决能力</span></h3><ul>
+<li>能够分析环境不一致问题的根本原因</li>
+<li>学会了设计容器化部署的整体方案</li>
+<li>掌握了容器故障排查和调试技巧</li>
+<li>能够评估不同部署方案的优劣</li>
+</ul>
+<h2><span id="下章预告">下章预告</span></h2><p><strong>第48章：Kubernetes：容器编排的王者</strong></p>
+<p>随着迪克商城用户量的增长，简单的Docker Compose已经无法满足高可用需求。张子烨将带领团队学习Kubernetes这一容器编排领域的王者技术，实现服务的自动扩缩容、滚动更新和故障自愈，为系统的高可用性奠定坚实基础。</p>
+<h2><span id="本章总结">本章总结</span></h2><p>第47章《Docker容器：应用打包的革命》讲述了张子烨和团队如何通过Docker技术解决环境不一致的痛点。从容器神殿的理论学习到迪克商城的实际应用，团队成功实现了服务的容器化部署，显著提升了开发效率和系统稳定性。</p>
+<p>通过生动的对话场景和实战代码示例，本章不仅传授了Docker技术的核心知识，更展现了技术标准化对团队协作的重要价值。张子烨在掌握容器化技术的同时，也深化了对现代软件部署理念的理解，为后续学习更复杂的容器编排技术打下了坚实基础。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">potoior</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2025/10/01/%E7%AC%AC47%E7%AB%A0%EF%BC%9ADocker%E5%AE%B9%E5%99%A8%EF%BC%9A%E5%BA%94%E7%94%A8%E6%89%93%E5%8C%85%E7%9A%84%E9%9D%A9%E5%91%BD/">http://example.com/2025/10/01/%E7%AC%AC47%E7%AB%A0%EF%BC%9ADocker%E5%AE%B9%E5%99%A8%EF%BC%9A%E5%BA%94%E7%94%A8%E6%89%93%E5%8C%85%E7%9A%84%E9%9D%A9%E5%91%BD/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://example.com" target="_blank">potoior</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/10/01/%E7%AC%AC48%E7%AB%A0%EF%BC%9AJenkins%E6%B5%81%E6%B0%B4%E7%BA%BF%EF%BC%9A%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/" title="代码神域：第48章：Jenkins流水线：自动化部署"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">代码神域：第48章：Jenkins流水线：自动化部署</div></div><div class="info-2"><div class="info-item-1">第48章：Jenkins流水线：自动化部署章节概述字数统计：12,500字 核心冲突：迪克商城在618大促期间面临频繁的手动部署问题，导致新功能上线延迟，影响用户体验和业务转化率。 双线叙事：  现实线：迪克科技团队在618大促期间遭遇部署瓶颈，手动部署效率低下，错误频发 神域线：张子烨在代码神域中进入”自动化神殿”，学习Jenkins流水线技术，解决现实世界的部署难题  生动对话场景场景一：618大促部署危机会议时间：618大促前一周，晚上8点地点：迪克科技会议室人物：张子烨、小温、小迪、小克、李经理 李经理焦急地敲着桌子：”各位，618大促还有一周就要开始了，我们的新功能部署进度严重滞后！昨天的手动部署又失败了，导致用户无法正常下单，损失了上百个订单！” 小克擦着额头的汗：”李经理，手动部署确实太容易出错了。每次都要检查环境变量、依赖包版本、配置文件，稍有不慎就会导致服务不可用。” 小迪补充道：”而且测试环境、预生产环境、生产环境的配置差异很大，手动部署很容易遗漏某些配置项。” 张子烨沉思片刻：”我最近在代码神域中接触到了Jenkins流水线技术，或许我们可以尝试建立自动化部...</div></div></div></a><a class="pagination-related" href="/2025/10/01/%E7%AC%AC46%E7%AB%A0%EF%BC%9ALinux%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%9A%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E4%B8%96%E7%95%8C/" title="代码神域：第46章：Linux服务器：命令行的世界"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">代码神域：第46章：Linux服务器：命令行的世界</div></div><div class="info-2"><div class="info-item-1">第46章：Linux服务器：命令行的世界章节概述（约11,500字）故事双线叙事：本章继续采用代码神域与现实开发环境双线并行的叙事方式。在代码神域中，张子烨进入”命令行神殿”，学习Linux命令行的奥秘；在现实世界中，迪克商城系统需要部署到Linux服务器，团队面临服务器操作和运维的挑战。 核心冲突：团队成员对Linux命令行操作不熟悉，导致部署效率低下，系统运维困难。 技术重点：Linux基础命令、文件操作、权限管理、进程管理、网络配置、Shell脚本编程。 生动对话场景命令行神殿的智慧对话（扩展）场景：代码神域的命令行神殿，巨大的终端界面闪烁着各种命令 小wic：（指着终端界面）”子烨，欢迎来到命令行神殿！这里每一个命令都是与系统对话的魔法咒语。” 张子烨：（好奇地观察）”这些命令看起来好复杂，ls、cd、grep…它们都有什么作用？” 小wic：”ls是查看目录内容，cd是切换目录，grep是文本搜索。但真正的命令行智慧在于组合使用这些命令，就像搭积木一样构建强大的功能。” 张子烨：”那我们应该如何系统学习这些命令？” 小wic：”需要从文件操作、权限管理、进程控制、网络配...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">potoior</div><div class="author-info-description">一位半栈工程师</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">136</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/potoior"><i class="fab fa-github"></i><span>出发咯</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/potoior" target="_blank" title=""><i class="GitHub"></i></a><a class="social-icon" href="mailto:2986486901@qq.com" target="_blank" title=""><i class="Email"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">第47章：Docker容器：应用打包的革命</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">章节概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">生动对话场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">容器神殿的智慧对话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">团队紧急会议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">技术实现讨论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">部署成功庆祝</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">Docker容器基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">核心概念解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">基础命令实战</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">实战演练：迪克商城容器化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">后端服务Dockerfile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">数据库服务配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">Redis缓存服务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">Docker Compose完整配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">迪克商城完整服务栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">服务启动与管理脚本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">技术要点深入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">镜像优化策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">容器网络配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">数据持久化策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">团队分工协作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">容器化任务分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">团队协作控制器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">技术要点总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">Docker核心价值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">最佳实践要点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">成长收获</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">技术能力提升</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">团队协作收获</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">问题解决能力</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">下章预告</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">本章总结</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 By potoior</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.0.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="30" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
