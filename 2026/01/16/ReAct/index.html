@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ReAct | potoior</title><meta name="author" content="potoior"><meta name="copyright" content="potoior"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="ReAct Agent 框架解析：让你五分钟看懂复杂代码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReAct">
+<meta property="og:url" content="http://potoior.cn/2026/01/16/ReAct/index.html">
+<meta property="og:site_name" content="potoior">
+<meta property="og:description" content="ReAct Agent 框架解析：让你五分钟看懂复杂代码">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://potoior.cn/img/img1.png">
+<meta property="article:published_time" content="2026-01-16T11:13:44.631Z">
+<meta property="article:modified_time" content="2025-11-25T12:47:41.000Z">
+<meta property="article:author" content="potoior">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://potoior.cn/img/img1.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "ReAct",
+  "url": "http://potoior.cn/2026/01/16/ReAct/",
+  "image": "http://potoior.cn/img/img1.png",
+  "datePublished": "2026-01-16T11:13:44.631Z",
+  "dateModified": "2025-11-25T12:47:41.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "potoior",
+      "url": "http://potoior.cn"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://potoior.cn/2026/01/16/ReAct/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const hour = new Date().getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (theme === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else theme === 'light' ? activateLightMode() : activateDarkMode()
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"top-right"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ReAct',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="baidu-site-verification" content="codeva-BMzky3Zrzt" /><meta name="generator" content="Hexo 8.0.0"></head><body><div id="web_bg" style="background-image: url(/img/bg.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/tx.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post type-agent" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/img1.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">potoior</span></a><a class="nav-page-title" href="/"><span class="site-name">ReAct</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">ReAct</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-01-16T11:13:44.631Z" title="发表于 2026-01-16 19:13:44">2026-01-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-25T12:47:41.000Z" title="更新于 2025-11-25 20:47:41">2025-11-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/agent/">agent</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;It has been&quot;,&quot;messageNext&quot;:&quot;days since the last update, the content of the article may be outdated.&quot;,&quot;postUpdate&quot;:&quot;2025-11-25 20:47:41&quot;}" hidden></div><h1><span id="简单易懂的-ai-agent-框架解析让你五分钟看懂复杂代码">简单易懂的 AI Agent 框架解析：让你五分钟看懂复杂代码</span></h1><p>作为一个新手，你可能会觉得复杂的代码就像外星语一样难以理解。别担心！今天我就带你一步一步地了解一个叫”Agent”的人工智能助手是如何工作的。我们不会讲太多复杂的理论，而是像剥洋葱一样，一层一层地揭开它的神秘面纱。</p>
+<h2><span id="什么是-ai-agent">什么是 AI Agent？</span></h2><p>简单来说，AI Agent 就像是一个智能小助手，它能听懂你说的话，想一想该怎么做，然后真的去执行一些任务。就像你告诉 Siri “帮我设个闹钟”，它就会思考怎么设置闹钟，然后真的帮你设置了。</p>
+<p>在这个项目里，我们创建了一个叫 ReActAgent 的 AI 助手，它遵循一种叫 ReAct 的工作模式：</p>
+<ol>
+<li><strong>思考</strong>（Thought）- 先想想应该做什么</li>
+<li><strong>行动</strong>（Action）- 然后做点什么</li>
+<li><strong>观察</strong>（Observation）- 看看做了之后有什么结果</li>
+<li>重复上面三个步骤，直到解决问题</li>
+</ol>
+<h2><span id="整体架构一览">整体架构一览</span></h2><p>我们的 AI Agent 项目由几个核心部分组成：</p>
+<ol>
+<li><strong>主控制器</strong>（agent.py）- 控制整个流程的核心大脑</li>
+<li><strong>提示模板</strong>（prompt_template.py）- 告诉 AI 如何按照规定格式交流</li>
+<li><strong>配置文件</strong>（pyproject.toml）- 记录项目依赖关系</li>
+<li><strong>使用说明</strong>（README.md）- 告诉别人怎么用这个项目</li>
+</ol>
+<p>接下来，我会带你深入了解每一部分的细节。</p>
+<h2><span id="深入-agentpy-ai-助手的大脑">深入 agent.py - AI 助手的大脑</span></h2><p>让我们从最重要的 agent.py 文件开始。你可以把它想象成 AI 助手的大脑，控制着整个思考和行动的过程。</p>
+<h3><span id="核心类reactagent">核心类：ReActAgent</span></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ReActAgent</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, tools: <span class="type">List</span>[<span class="type">Callable</span>], model: <span class="built_in">str</span>, project_directory: <span class="built_in">str</span></span>):</span><br><span class="line">        <span class="variable language_">self</span>.tools = &#123; func.__name__: func <span class="keyword">for</span> func <span class="keyword">in</span> tools &#125;</span><br><span class="line">        <span class="variable language_">self</span>.model = model</span><br><span class="line">        <span class="variable language_">self</span>.project_directory = project_directory</span><br><span class="line">        <span class="variable language_">self</span>.client = OpenAI(</span><br><span class="line">            base_url=<span class="string">&quot;https://openrouter.ai/api/v1&quot;</span>,</span><br><span class="line">            api_key=ReActAgent.get_api_key(),</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+
+<p>这段代码定义了我们的 AI 助手类。构造函数（<strong>init</strong>）接受三个参数：</p>
+<ul>
+<li>tools: 可用的工具列表（比如读文件、写文件、执行命令）</li>
+<li>model: 使用的 AI 模型名称</li>
+<li>project_directory: 项目所在的目录</li>
+</ul>
+<p>这里还初始化了一个 OpenAI 客户端，用来和 AI 模型通信。</p>
+<h3><span id="主循环run-方法">主循环：run 方法</span></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">self, user_input: <span class="built_in">str</span></span>):</span><br><span class="line">    messages = [</span><br><span class="line">        &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="variable language_">self</span>.render_system_prompt(react_system_prompt_template)&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">f&quot;&lt;question&gt;<span class="subst">&#123;user_input&#125;</span>&lt;/question&gt;&quot;</span>&#125;</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        content = <span class="variable language_">self</span>.call_model(messages)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 检查是否是最终答案</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;&lt;final_answer&gt;&quot;</span> <span class="keyword">in</span> content:</span><br><span class="line">            final_answer = re.search(<span class="string">r&quot;&lt;final_answer&gt;(.*?)&lt;/final_answer&gt;&quot;</span>, content, re.DOTALL)</span><br><span class="line">            <span class="keyword">return</span> final_answer.group(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 解析并执行动作</span></span><br><span class="line">        action_match = re.search(<span class="string">r&quot;&lt;action&gt;(.*?)&lt;/action&gt;&quot;</span>, content, re.DOTALL)</span><br><span class="line">        tool_name, args = <span class="variable language_">self</span>.parse_action(action)</span><br><span class="line">        observation = <span class="variable language_">self</span>.tools[tool_name](*args)</span><br><span class="line">        messages.append(&#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">f&quot;&lt;observation&gt;<span class="subst">&#123;observation&#125;</span>&lt;/observation&gt;&quot;</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>这是整个 AI 助手最核心的部分。它的工作流程是这样的：</p>
+<ol>
+<li>准备初始消息：包括系统指令和用户问题</li>
+<li>进入一个无限循环，直到得到最终答案：<ul>
+<li>调用 AI 模型获取响应</li>
+<li>如果是最终答案就返回</li>
+<li>如果是动作指令就执行相应的工具</li>
+<li>把执行结果告诉 AI 模型，继续下一轮</li>
+</ul>
+</li>
+</ol>
+<h3><span id="工具系统">工具系统</span></h3><p>AI 助手的强大之处在于它可以使用工具。目前有三个内置工具：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">read_file</span>(<span class="params">file_path</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;读取文件内容&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(file_path, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">return</span> f.read()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">write_to_file</span>(<span class="params">file_path, content</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;将内容写入文件&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(file_path, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(content.replace(<span class="string">&quot;\\n&quot;</span>, <span class="string">&quot;\n&quot;</span>))</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;写入成功&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run_terminal_command</span>(<span class="params">command</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;执行终端命令&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">import</span> subprocess</span><br><span class="line">    run_result = subprocess.run(command, shell=<span class="literal">True</span>, capture_output=<span class="literal">True</span>, text=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;执行成功&quot;</span> <span class="keyword">if</span> run_result.returncode == <span class="number">0</span> <span class="keyword">else</span> run_result.stderr</span><br></pre></td></tr></table></figure>
+
+<p>这些工具让 AI 助手可以真正地”做事”，而不仅仅是聊天：</p>
+<ul>
+<li>读取任何文件的内容</li>
+<li>创建或修改文件</li>
+<li>执行电脑上的命令</li>
+</ul>
+<h2><span id="深入-prompt_templatepy-ai-的行为准则">深入 prompt_template.py - AI 的行为准则</span></h2><p>prompt_template.py 文件定义了 AI 应该如何表现和沟通。我们可以把它想象成教 AI 如何说话的”教材”。</p>
+<h3><span id="react-框架模板">ReAct 框架模板</span></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">react_system_prompt_template = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">你需要解决一个问题。为此，你需要将问题分解为多个步骤。对于每个步骤，首先使用 &lt;thought&gt; 思考要做什么，然后使用可用工具之一决定一个 &lt;action&gt;。接着，你将根据你的行动从环境/工具中收到一个 &lt;observation&gt;。持续这个思考和行动的过程，直到你有足够的信息来提供 &lt;final_answer&gt;。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">所有步骤请严格使用以下 XML 标签格式输出：</span></span><br><span class="line"><span class="string">- &lt;question&gt; 用户问题</span></span><br><span class="line"><span class="string">- &lt;thought&gt; 思考</span></span><br><span class="line"><span class="string">- &lt;action&gt; 采取的工具操作</span></span><br><span class="line"><span class="string">- &lt;observation&gt; 工具或环境返回的结果</span></span><br><span class="line"><span class="string">- &lt;final_answer&gt; 最终答案</span></span><br></pre></td></tr></table></figure>
+
+<p>这部分告诉 AI 必须按照特定的格式来交流。就像我们说话要有主谓宾一样，AI 的每句话都要放在对应的”标签”里：</p>
+<ul>
+<li><code>&lt;thought&gt;</code>: AI 在想什么</li>
+<li><code>&lt;action&gt;</code>: AI 要做什么</li>
+<li><code>&lt;observation&gt;</code>: AI 看到了什么结果</li>
+<li><code>&lt;final_answer&gt;</code>: AI 的最终答案</li>
+</ul>
+<h3><span id="举例说明">举例说明</span></h3><p>模板中包含了两个具体的例子帮助 AI 理解应该如何工作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">例子 1:</span><br><span class="line">&lt;question&gt;埃菲尔铁塔有多高？&lt;/question&gt;</span><br><span class="line">&lt;thought&gt;我需要找到埃菲尔铁塔的高度。可以使用搜索工具。&lt;/thought&gt;</span><br><span class="line">&lt;action&gt;get_height(&quot;埃菲尔铁塔&quot;)&lt;/action&gt;</span><br><span class="line">&lt;observation&gt;埃菲尔铁塔的高度约为330米（包含天线）。&lt;/observation&gt;</span><br><span class="line">&lt;thought&gt;搜索结果显示了高度。我已经得到答案了。&lt;/thought&gt;</span><br><span class="line">&lt;final_answer&gt;埃菲尔铁塔的高度约为330米。&lt;/final_answer&gt;</span><br></pre></td></tr></table></figure>
+
+<p>通过这种方式，AI 学会了如何一步步解决问题，而不是直接给出答案。</p>
+<h3><span id="工具列表注入">工具列表注入</span></h3><p>模板还有一个重要的特性，就是它会在运行时插入实际可用的工具列表：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">本次任务可用工具：</span><br><span class="line">$&#123;tool_list&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样 AI 就知道它能使用哪些工具了。</p>
+<h2><span id="配置文件和其他辅助部分">配置文件和其他辅助部分</span></h2><p>除了主要的代码文件，还有一些配置和辅助文件也很重要。</p>
+<h3><span id="pyprojecttoml-项目依赖管理">pyproject.toml - 项目依赖管理</span></h3><figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[project]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;agent&quot;</span></span><br><span class="line"><span class="attr">version</span> = <span class="string">&quot;0.1.0&quot;</span></span><br><span class="line"><span class="attr">description</span> = <span class="string">&quot;Add your description here&quot;</span></span><br><span class="line"><span class="attr">requires-python</span> = <span class="string">&quot;&gt;=3.12&quot;</span></span><br><span class="line"><span class="attr">dependencies</span> = [</span><br><span class="line">    <span class="string">&quot;click&gt;=8.2.1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;openai&gt;=1.91.0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;python-dotenv&gt;=1.1.1&quot;</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>这个文件告诉我们项目需要哪些依赖：</p>
+<ul>
+<li><code>click</code>: 用于创建命令行界面</li>
+<li><code>openai</code>: 用于与 AI 模型通信</li>
+<li><code>python-dotenv</code>: 用于加载环境变量</li>
+</ul>
+<h3><span id="readmemd-使用说明">README.md - 使用说明</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 运行方法</span><br><span class="line"></span><br><span class="line">首先请确保你已经安装了 uv，如果没有的话，请按以下页面的要求安装：</span><br><span class="line">https://docs.astral.sh/uv/guides/install-python/</span><br><span class="line"></span><br><span class="line">然后在当前目录下，新建一个叫做 .env 的文件，输入以下内容：</span><br><span class="line">OPENROUTER_API_KEY=xxx</span><br><span class="line"></span><br><span class="line">xxx 就是你在 OpenRouter 上配好的 API Key。</span><br><span class="line"></span><br><span class="line">确保 uv 已经安装成功后，进入到当前文件所在目录，然后执行以下命令即可启动：</span><br><span class="line">uv run agent.py snake</span><br></pre></td></tr></table></figure>
+
+<p>这个文件告诉使用者如何安装和运行这个 AI 助手。</p>
+<h3><span id="命令行接口">命令行接口</span></h3><p>最后，agent.py 文件末尾还定义了命令行接口：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@click.command()</span></span><br><span class="line"><span class="meta">@click.argument(<span class="params"><span class="string">&#x27;project_directory&#x27;</span>,</span></span></span><br><span class="line"><span class="params"><span class="meta">                <span class="built_in">type</span>=click.Path(<span class="params">exists=<span class="literal">True</span>, file_okay=<span class="literal">False</span>, dir_okay=<span class="literal">True</span></span>)</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">project_directory</span>):</span><br><span class="line">    project_dir = os.path.abspath(project_directory)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 定义可用工具列表</span></span><br><span class="line">    tools = [read_file, write_to_file, run_terminal_command]</span><br><span class="line">    <span class="comment"># 创建代理实例</span></span><br><span class="line">    agent = ReActAgent(tools=tools, model=<span class="string">&quot;openai/gpt-4o&quot;</span>, project_directory=project_dir)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取用户任务输入</span></span><br><span class="line">    task = <span class="built_in">input</span>(<span class="string">&quot;请输入任务：&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 运行代理并获取最终答案</span></span><br><span class="line">    final_answer = agent.run(task)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;\n\n✅ Final Answer：<span class="subst">&#123;final_answer&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<p>这一部分让用户可以通过命令行来启动 AI 助手，并指定要处理的项目目录。</p>
+<h2><span id="总结">总结</span></h2><p>通过以上分析，我们可以看到这个 AI Agent 项目的整体工作原理：</p>
+<ol>
+<li><strong>初始化阶段</strong>：创建 ReActAgent 实例，配置好 AI 模型和可用工具</li>
+<li><strong>准备阶段</strong>：构建系统提示，告诉 AI 它的任务和沟通格式</li>
+<li><strong>执行阶段</strong>：进入主循环，不断与 AI 交互直到得到最终答案</li>
+<li><strong>交互流程</strong>：AI 思考 → AI 行动 → 执行工具 → 返回结果 → 继续循环</li>
+</ol>
+<p>整个系统的设计非常巧妙，它将复杂的 AI 交互过程标准化，使得 AI 可以像人一样通过”思考-行动-观察”的循环来解决问题。</p>
+<p>最重要的是理解这个框架的核心思想：不是让 AI 一次性解决所有问题，而是让它一步步地思考和行动，在每一步都验证结果，最终达成目标。</p>
+<p>这种设计思路其实很像我们人类学习新技能的过程——先思考要做什么，然后动手尝试，观察结果，再调整策略，如此反复直到掌握。</p>
+<p>希望这篇博客能帮助你更好地理解 AI Agent 的工作机制！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://potoior.cn">potoior</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://potoior.cn/2026/01/16/ReAct/">http://potoior.cn/2026/01/16/ReAct/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://potoior.cn" target="_blank">potoior</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/img1.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/01/16/RNN/" title="RNN"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/img3.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">RNN</div></div><div class="info-2"><div class="info-item-1"> ❤️ 用“我喜欢你”讲解你的 RNN 代码全过程（超大白话）📌 你需要知道的前提（非常简单）在 RNN 里，“我喜欢你”不是直接输入文字，而是变成三个“向量”：  “我” → 一个 5 维向量（input_size&#x3D;5） “喜欢” → 一个 5 维向量 “你” → 一个 5 维向量  为什么是 5 维？因为你的 RNN 是 nn.RNN(5, 6, 1)，规定每个词的向量必须是长度 5。 然后 RNN 会按顺序，一个一个词地读。  ✨ 故事开始：RNN 是一个“小记事本机器人”这个机器人叫 RNN 小明，它的特点：  每次只能看一个词（input_size&#x3D;5 的向量） 它有一个“脑袋记忆”（hidden_size&#x3D;6） 每看一个词，就会更新一次记忆  就像你让小明读一段话，他会边看边记： 1我 → 喜欢 → 你   🧩 对应到你的 RNN 代码第一步：创建 RNN1rnn = nn.RNN(5, 6, 1)  翻译成大白话：  “小明每次读一个 5 维向量，他的脑容量是 6 维，他只有一层大脑。”   第二步：准备输入（“我喜欢你”）你的代码...</div></div></div></a><a class="pagination-related" href="/2026/01/16/LSTM/" title="LSTM模型大白话讲解"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/img2.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">LSTM模型大白话讲解</div></div><div class="info-2"><div class="info-item-1">LSTM 大白话讲解核心概念比喻   概念 比喻 说明    LSTM 超级读者 有特殊记忆方法的聪明读者   长期记忆 $$(C_t)$$ 主线剧情 像河流一样流淌的重要情节   短期记忆 $$(h_t)$$ 即时感受 刚读完一章时的想法   新输入 $$(x_t)$$ 新读到的内容 小说中的新句子、新情节   符号详解📅 时间相关符号   符号 含义 例子    t 当前时刻 正在读第 10 章   t-1 上一时刻 刚读完第 9 章   t+1 下一时刻 将要读第 11 章   🧠 记忆状态符号   符号 名称 大白话解释    $$C_t$$ 细胞状态$$( Cell \quad State)$$ 长期记忆，保存主线剧情   $$h_t$$ 隐藏状态$$(Hidden \quad State)$$ 短期记忆，当前的想法感受   $$x_t$$ 输入$$(Input)$$ 新接收到的信息   🚪 三个控制门   符号 名称 作用 取值范围    $$f_t$$ 忘记门$$( Forget \quad Gate)$$ 决定遗忘什么 0-1 (0&#x3D;全忘，1&#x...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/tx.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">potoior</div><div class="author-info-description">一位半栈工程师</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/potoior"><i class="fab fa-github"></i><span>干了兄弟们</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/potoior" target="_blank" title=""><i class="GitHub"></i></a><a class="social-icon" href="mailto:2986486901@qq.com" target="_blank" title=""><i class="Email"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">立志做一名全栈工程师</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">简单易懂的 AI Agent 框架解析：让你五分钟看懂复杂代码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">什么是 AI Agent？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">整体架构一览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">深入 agent.py - AI 助手的大脑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">核心类：ReActAgent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">主循环：run 方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">工具系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">深入 prompt_template.py - AI 的行为准则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">ReAct 框架模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">举例说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">工具列表注入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">配置文件和其他辅助部分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">pyproject.toml - 项目依赖管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">README.md - 使用说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">命令行接口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">总结</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By potoior</span></div><div class="footer_custom_text"><a href="https://beian.miit.gov.cn" target="_blank">鄂ICP备2025152739号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="30" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

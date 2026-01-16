@@ -1,0 +1,328 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Temperature 与 Top-p 的数学原理详解 | potoior</title><meta name="author" content="potoior"><meta name="copyright" content="potoior"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="Temperature 与 Top-p 的数学原理详解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Temperature 与 Top-p 的数学原理详解">
+<meta property="og:url" content="http://potoior.cn/2026/01/16/Temperature%E5%92%8Ctop-p/index.html">
+<meta property="og:site_name" content="potoior">
+<meta property="og:description" content="Temperature 与 Top-p 的数学原理详解">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://potoior.cn/img/img2.jpg">
+<meta property="article:published_time" content="2026-01-16T11:15:36.855Z">
+<meta property="article:modified_time" content="2025-11-25T12:47:41.000Z">
+<meta property="article:author" content="potoior">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://potoior.cn/img/img2.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Temperature 与 Top-p 的数学原理详解",
+  "url": "http://potoior.cn/2026/01/16/Temperature%E5%92%8Ctop-p/",
+  "image": "http://potoior.cn/img/img2.jpg",
+  "datePublished": "2026-01-16T11:15:36.855Z",
+  "dateModified": "2025-11-25T12:47:41.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "potoior",
+      "url": "http://potoior.cn"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://potoior.cn/2026/01/16/Temperature%E5%92%8Ctop-p/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const hour = new Date().getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (theme === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else theme === 'light' ? activateLightMode() : activateDarkMode()
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"top-right"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Temperature 与 Top-p 的数学原理详解',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="baidu-site-verification" content="codeva-BMzky3Zrzt" /><meta name="generator" content="Hexo 8.0.0"></head><body><div id="web_bg" style="background-image: url(/img/bg.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/tx.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post type-agent" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/img2.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">potoior</span></a><a class="nav-page-title" href="/"><span class="site-name">Temperature 与 Top-p 的数学原理详解</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Temperature 与 Top-p 的数学原理详解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-01-16T11:15:36.855Z" title="发表于 2026-01-16 19:15:36">2026-01-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-25T12:47:41.000Z" title="更新于 2025-11-25 20:47:41">2025-11-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/agent/">agent</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">3.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;It has been&quot;,&quot;messageNext&quot;:&quot;days since the last update, the content of the article may be outdated.&quot;,&quot;postUpdate&quot;:&quot;2025-11-25 20:47:41&quot;}" hidden></div><h1><span id="解密-ai-文本生成的魔法旋钮temperature-与-top-p-的数学原理详解">解密 AI 文本生成的魔法旋钮：Temperature 与 Top-p 的数学原理详解</span></h1><blockquote>
+<p>在 AI 文本生成的神秘世界中，两个看似简单的参数控制着创意与逻辑的平衡——理解它们背后的数学，才能真正掌握生成式 AI 的艺术。</p>
+</blockquote>
+<h2><span id="引言为什么我们需要这些参数">引言：为什么我们需要这些参数？</span></h2><p>当你与 ChatGPT 对话时，你是否曾想过，为什么它有时回答得严谨准确，有时又创意飞扬？这背后有两个关键的调控参数：<strong>Temperature</strong>和<strong>Top-p（核采样）</strong>。它们像是 AI 创作的“调音台”，一个控制创意的“温度”，一个控制选择的“广度”。</p>
+<p>本文将从最基础的数学公式出发，带你深入理解这两个参数如何从底层塑造 AI 的每一次回应。</p>
+<h2><span id="一-起点softmax从分数到概率的桥梁">一、起点：Softmax——从分数到概率的桥梁</span></h2><p>要理解 Temperature 和 Top-p，我们必须先了解它们操作的对象：<strong>Softmax 函数</strong>。</p>
+<p>想象一下，AI 模型在预测下一个词时，会对词汇表中的每个词计算一个原始分数（logits）。这些分数就像学生在考试中获得的原始分，可能有正有负，数值范围各异。</p>
+<p><strong>Softmax 函数</strong>的作用就是将这一组原始分数转化为概率分布：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Softmax的直观理解</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">softmax</span>(<span class="params">logits</span>):</span><br><span class="line">    exp_logits = np.exp(logits - np.<span class="built_in">max</span>(logits))  <span class="comment"># 数值稳定性技巧</span></span><br><span class="line">    <span class="keyword">return</span> exp_logits / np.<span class="built_in">sum</span>(exp_logits)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例：模型对5个候选词的原始评分</span></span><br><span class="line">raw_scores = [<span class="number">2.0</span>, <span class="number">1.0</span>, <span class="number">0.1</span>, -<span class="number">1.0</span>, -<span class="number">2.0</span>]</span><br><span class="line">probabilities = softmax(raw_scores)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;原始分数:&quot;</span>, raw_scores)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Softmax后的概率:&quot;</span>, probabilities)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;概率总和:&quot;</span>, <span class="built_in">sum</span>(probabilities))  <span class="comment"># 总是等于1</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>数学公式</strong>：</p>
+<p>$$<br>P(w_i) &#x3D; \frac{e^{z_i}}{\sum_{j&#x3D;1}^{V} e^{z_j}}<br>$$</p>
+<p>其中：</p>
+<ul>
+<li>$( z_i )$ 是词 $( w_i )$ 的原始分数（logit）</li>
+<li>$( V )$ 是词汇表大小</li>
+<li>$( e^{z_i} )$ 确保所有值为正数</li>
+<li>分母是所有值的总和，确保输出概率和为 1</li>
+</ul>
+<p>Softmax 的核心特性是<strong>相对性</strong>：它只关心分数之间的相对差异，而不是绝对值。分数最高的词会获得最大的概率，但这种优势会随着分数差距的变化而放大或缩小。</p>
+<h2><span id="二-temperature概率分布的热力学控制">二、Temperature：概率分布的”热力学控制”</span></h2><h3><span id="21-直观理解">2.1 直观理解</span></h3><p>Temperature 参数可以类比为物理中的”温度”概念：</p>
+<ul>
+<li><strong>低温</strong>：分子运动缓慢，倾向于停留在最低能量状态 → AI 选择最可能的词</li>
+<li><strong>高温</strong>：分子运动剧烈，可能跃迁到各种状态 → AI 有更多随机选择</li>
+</ul>
+<h3><span id="22-数学原理">2.2 数学原理</span></h3><p>Temperature 在 Softmax 计算<strong>之前</strong>介入，对原始 logits 进行缩放：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">softmax_with_temperature</span>(<span class="params">logits, temperature=<span class="number">1.0</span></span>):</span><br><span class="line">    scaled_logits = logits / temperature</span><br><span class="line">    <span class="keyword">return</span> softmax(scaled_logits)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 比较不同温度下的概率分布</span></span><br><span class="line">logits = [<span class="number">3.0</span>, <span class="number">2.0</span>, <span class="number">1.0</span>]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;T=0.5 (低温):&quot;</span>, softmax_with_temperature(logits, <span class="number">0.5</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;T=1.0 (常温):&quot;</span>, softmax_with_temperature(logits, <span class="number">1.0</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;T=2.0 (高温):&quot;</span>, softmax_with_temperature(logits, <span class="number">2.0</span>))</span><br></pre></td></tr></table></figure>
+
+<p><strong>温度调节公式</strong>：</p>
+<p>$$<br>P_T(w_i) &#x3D; \frac{e^{z_i &#x2F; T}}{\sum_{j&#x3D;1}^{V} e^{z_j &#x2F; T}}<br>$$</p>
+<h3><span id="23-温度效应的数学分析">2.3 温度效应的数学分析</span></h3><p>让我们深入分析这个公式的数学特性：</p>
+<h4><span id="1-极限情况分析">1. <strong>极限情况分析</strong></span></h4><ul>
+<li><strong>当 ( T \to 0^+ ) （极低温）</strong>：$$\lim_{T \to 0^+} P_T(w_i) &#x3D; \begin{cases} 1 &amp; \text{如果 } z_i &#x3D; \max(\mathbf{z}) \0 &amp; \text{否则}\end{cases}$$<br>这就是<strong>贪婪解码（greedy decoding）</strong>，总是选择最高分数的词。</li>
+<li><strong>当 $( T \to \infty )$ （极高温度）</strong>：<br>$$<br>\lim_{T \to \infty} P_T(w_i) &#x3D; \frac{1}{V}<br>$$<br>所有词的概率相等，变为均匀分布，输出完全随机。</li>
+</ul>
+<h4><span id="2-温度对概率分布的锐化效应">2. <strong>温度对概率分布的”锐化”效应</strong></span></h4><p>我们可以通过计算概率分布的**熵（Entropy）**来量化这种效应：</p>
+<p>$$<br>H(P_T) &#x3D; -\sum_{i&#x3D;1}^{V} P_T(w_i) \log P_T(w_i)<br>$$</p>
+<p>熵衡量了分布的不确定性。温度越低，熵越小（确定性越高）；温度越高，熵越大（随机性越高）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">compute_entropy</span>(<span class="params">probs</span>):</span><br><span class="line">    <span class="keyword">return</span> -np.<span class="built_in">sum</span>(probs * np.log(probs + <span class="number">1e-10</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 分析温度对熵的影响</span></span><br><span class="line">logits = np.array([<span class="number">5.0</span>, <span class="number">4.0</span>, <span class="number">3.0</span>, <span class="number">2.0</span>, <span class="number">1.0</span>])</span><br><span class="line">temperatures = np.linspace(<span class="number">0.1</span>, <span class="number">3.0</span>, <span class="number">50</span>)</span><br><span class="line">entropies = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> T <span class="keyword">in</span> temperatures:</span><br><span class="line">    probs = softmax_with_temperature(logits, T)</span><br><span class="line">    entropies.append(compute_entropy(probs))</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">10</span>, <span class="number">6</span>))</span><br><span class="line">plt.plot(temperatures, entropies, <span class="string">&#x27;b-&#x27;</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Temperature (T)&#x27;</span>, fontsize=<span class="number">12</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Entropy H(P)&#x27;</span>, fontsize=<span class="number">12</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;Temperature vs Probability Distribution Entropy&#x27;</span>, fontsize=<span class="number">14</span>)</span><br><span class="line">plt.grid(<span class="literal">True</span>, alpha=<span class="number">0.3</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h4><span id="3-温度不改变排序">3. <strong>温度不改变排序</strong></span></h4><p>一个重要性质是：温度参数<strong>不会改变</strong>原始 logits 的相对排序。如果 $( z_i &gt; z_j )$，那么对于任何 $( T &gt; 0 )$，都有 $( P_T(w_i) &gt; P_T(w_j) )$。</p>
+<p><strong>证明</strong>：</p>
+<p>$$<br>\frac{P_T(w_i)}{P_T(w_j)} &#x3D; \frac{e^{z_i&#x2F;T}}{e^{z_j&#x2F;T}} &#x3D; e^{(z_i - z_j)&#x2F;T} &gt; 1 \quad \text{当 } z_i &gt; z_j<br>$$</p>
+<h3><span id="24-实际应用中的温度选择">2.4 实际应用中的温度选择</span></h3><p>在实际应用中，温度的选择取决于任务需求：</p>
+<ul>
+<li><strong>低温度（0.1-0.3）</strong>：用于代码生成、事实问答、翻译等需要准确性的任务</li>
+<li><strong>中等温度（0.5-0.7）</strong>：平衡模式，适用于一般对话</li>
+<li><strong>高温度（0.8-1.2）</strong>：用于创意写作、诗歌生成、头脑风暴</li>
+</ul>
+<h2><span id="三-top-p核采样动态剪枝的艺术">三、Top-p（核采样）：动态剪枝的艺术</span></h2><h3><span id="31-为什么需要-top-p">3.1 为什么需要 Top-p？</span></h3><p>在 Temperature 之后，我们还有一个问题：即使经过温度调整，概率分布可能仍然包含大量极低概率的词。这些”长尾”词可能会被偶然选中，导致生成不连贯的内容。</p>
+<p>Top-p 采样就是为了解决这个问题：<strong>动态地选择最有可能的词构成候选集合</strong>。</p>
+<h3><span id="32-数学原理从累积概率到核集合">3.2 数学原理：从累积概率到核集合</span></h3><p>Top-p 的核心思想是：<strong>只从累积概率达到 p 的最小词集合中抽样</strong>。</p>
+<p><strong>算法步骤</strong>：</p>
+<ol>
+<li><strong>排序</strong>：将词汇表中的词按照概率从高到低排序</li>
+<li><strong>累积</strong>：计算累积概率</li>
+<li><strong>截断</strong>：找到最小的 n，使得前 n 个词的累积概率 ≥ p</li>
+<li><strong>重归一化</strong>：在这个”核”集合内重新计算概率</li>
+<li><strong>采样</strong>：从新的分布中采样</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">top_p_sampling</span>(<span class="params">probs, top_p=<span class="number">0.9</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Top-p（核采样）实现&quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 1. 按概率降序排序，同时保留原始索引</span></span><br><span class="line">    sorted_indices = np.argsort(probs)[::-<span class="number">1</span>]</span><br><span class="line">    sorted_probs = probs[sorted_indices]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 2. 计算累积概率</span></span><br><span class="line">    cumulative_probs = np.cumsum(sorted_probs)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3. 找到达到top_p的最小集合</span></span><br><span class="line">    <span class="comment"># 减去一个小数避免浮点误差</span></span><br><span class="line">    nucleus_indices = np.where(cumulative_probs &gt;= top_p)[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(nucleus_indices) == <span class="number">0</span>:</span><br><span class="line">        nucleus_size = <span class="built_in">len</span>(probs)  <span class="comment"># 全部包含</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        nucleus_size = nucleus_indices[<span class="number">0</span>] + <span class="number">1</span>  <span class="comment"># 最小集合大小</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 4. 只保留核内的词</span></span><br><span class="line">    nucleus_probs = sorted_probs[:nucleus_size]</span><br><span class="line">    nucleus_indices = sorted_indices[:nucleus_size]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 5. 重新归一化</span></span><br><span class="line">    nucleus_probs = nucleus_probs / np.<span class="built_in">sum</span>(nucleus_probs)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> nucleus_indices, nucleus_probs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例</span></span><br><span class="line">original_probs = np.array([<span class="number">0.4</span>, <span class="number">0.3</span>, <span class="number">0.2</span>, <span class="number">0.05</span>, <span class="number">0.03</span>, <span class="number">0.02</span>])</span><br><span class="line">nucleus_indices, nucleus_probs = top_p_sampling(original_probs, top_p=<span class="number">0.9</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;原始概率:&quot;</span>, original_probs)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;核内词索引:&quot;</span>, nucleus_indices)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;重归一化后的概率:&quot;</span>, nucleus_probs)</span><br></pre></td></tr></table></figure>
+
+<h3><span id="33-数学公式详解">3.3 数学公式详解</span></h3><p>设经过温度调整后的概率分布为 $( P_T &#x3D; [p_1, p_2, …, p_V] )$。</p>
+<ol>
+<li><p><strong>排序</strong>：得到降序排列 $( p_{(1)} \ge p_{(2)} \ge … \ge p_{(V)} )$</p>
+</li>
+<li><p><strong>累积概率</strong>：</p>
+<p>$$<br>C_{(k)} &#x3D; \sum_{j&#x3D;1}^{k} p_{(j)}<br>$$</p>
+</li>
+<li><p><strong>确定核集合</strong>：对于给定的 ( p )（如 0.9），找到最小的 ( n ) 使得：</p>
+<p>$$<br>C_{(n)} \ge p<br>$$</p>
+<p>这个前 ( n ) 个词组成的集合就是<strong>核（Nucleus）</strong>。</p>
+</li>
+<li><p><strong>重新归一化</strong>：</p>
+<p>$$<br>P_{\text{top-p}}(w_{(i)}) &#x3D;<br>\begin{cases}<br>\frac{p_{(i)}}{\sum_{j&#x3D;1}^{n} p_{(j)}} &amp; \text{如果 } i \le n \<br>0 &amp; \text{如果 } i &gt; n<br>\end{cases}<br>$$</p>
+</li>
+<li><p><strong>采样</strong>：从 $( P_{\text{top-p}} )$ 中抽取下一个词。</p>
+</li>
+</ol>
+<h3><span id="34-top-p-的数学特性">3.4 Top-p 的数学特性</span></h3><h4><span id="1-自适应核大小">1. <strong>自适应核大小</strong></span></h4><p>Top-p 的关键优势是<strong>动态核大小</strong>。对比固定的 Top-p 采样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">compare_top_k_vs_top_p</span>():</span><br><span class="line">    <span class="comment"># 场景1：概率集中分布</span></span><br><span class="line">    probs_concentrated = np.array([<span class="number">0.7</span>, <span class="number">0.2</span>, <span class="number">0.05</span>, <span class="number">0.03</span>, <span class="number">0.02</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 场景2：概率分散分布</span></span><br><span class="line">    probs_dispersed = np.array([<span class="number">0.3</span>, <span class="number">0.25</span>, <span class="number">0.2</span>, <span class="number">0.15</span>, <span class="number">0.1</span>])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> scenario, probs <span class="keyword">in</span> [(<span class="string">&quot;集中分布&quot;</span>, probs_concentrated),</span><br><span class="line">                            (<span class="string">&quot;分散分布&quot;</span>, probs_dispersed)]:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;\n<span class="subst">&#123;scenario&#125;</span>:&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;原始概率:&quot;</span>, probs)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Top-k (k=3)</span></span><br><span class="line">        top_k_indices = np.argsort(probs)[-<span class="number">3</span>:][::-<span class="number">1</span>]</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Top-3选择的词数: 3 (固定)&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Top-p (p=0.9)</span></span><br><span class="line">        nucleus_indices, _ = top_p_sampling(probs, top_p=<span class="number">0.9</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Top-p(0.9)选择的词数: <span class="subst">&#123;<span class="built_in">len</span>(nucleus_indices)&#125;</span> (动态)&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4><span id="2-概率质量保证">2. <strong>概率质量保证</strong></span></h4><p>Top-p 保证了至少 ( p ) 的概率质量被包含在核中。这意味着被丢弃的词的总概率不超过 ( 1-p )。</p>
+<h4><span id="3-与-temperature-的协同作用">3. <strong>与 Temperature 的协同作用</strong></span></h4><p>Temperature 和 Top-p 通常结合使用：</p>
+<ul>
+<li>Temperature 先调整分布的”温度”（熵）</li>
+<li>Top-p 再对调整后的分布进行动态剪枝</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">generate_with_temperature_and_topp</span>(<span class="params">logits, temperature=<span class="number">1.0</span>, top_p=<span class="number">0.9</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;结合Temperature和Top-p的完整生成流程&quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 1. 应用温度</span></span><br><span class="line">    scaled_logits = logits / temperature</span><br><span class="line">    probs = softmax(scaled_logits)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 2. 应用top-p</span></span><br><span class="line">    nucleus_indices, nucleus_probs = top_p_sampling(probs, top_p)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3. 从核中采样</span></span><br><span class="line">    chosen_index = np.random.choice(nucleus_indices, p=nucleus_probs)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> chosen_index</span><br></pre></td></tr></table></figure>
+
+<h3><span id="35-为什么-top-p-优于-top-k">3.5 为什么 Top-p 优于 Top-k？</span></h3><ol>
+<li><strong>适应性</strong>：Top-p 根据分布形状动态调整候选集大小</li>
+<li><strong>质量保证</strong>：确保候选集包含大部分概率质量</li>
+<li><strong>稳定性</strong>：在不同上下文长度和概率分布下表现更一致</li>
+</ol>
+<h2><span id="四-联合效应temperature-与-top-p-的协同工作原理">四、联合效应：Temperature 与 Top-p 的协同工作原理</span></h2><h3><span id="41-完整的数学管道">4.1 完整的数学管道</span></h3><p>在文本生成的每一步，完整的处理流程可以用数学公式表示为：</p>
+<ol>
+<li><strong>原始分数</strong>：模型输出 $( \mathbf{z} &#x3D; [z_1, z_2, …, z_V] )$</li>
+<li><strong>温度缩放</strong>：$( \mathbf{z}^{(\text{temp})} &#x3D; \mathbf{z} &#x2F; T )$</li>
+<li><strong>Softmax 转换</strong>：$( P_T &#x3D; \text{Softmax}(\mathbf{z}^{(\text{temp})}) )$</li>
+<li><strong>Top-p 处理</strong>：<ul>
+<li>对 ( P<em>T ) 排序得 $( p</em>{(1)} \ge p*{(2)} \ge … \ge p*{(V)} )$</li>
+<li>找到 $( n &#x3D; \min{k: \sum_{j&#x3D;1}^k p_{(j)} \ge p} )$</li>
+<li>计算 $( P_{\text{final}}(w_{(i)}) &#x3D; \frac{p_{(i)}}{\sum_{j&#x3D;1}^n p_{(j)}} \cdot \mathbb{1}_{i \le n} )$</li>
+</ul>
+</li>
+<li><strong>采样</strong>：$( w_{\text{next}} \sim P_{\text{final}} )$</li>
+</ol>
+<h3><span id="42-可视化联合效应">4.2 可视化联合效应</span></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">visualize_combined_effect</span>():</span><br><span class="line">    np.random.seed(<span class="number">42</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 模拟模型输出的logits（假设词汇表大小为10）</span></span><br><span class="line">    logits = np.random.normal(<span class="number">0</span>, <span class="number">2</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    fig, axes = plt.subplots(<span class="number">2</span>, <span class="number">3</span>, figsize=(<span class="number">15</span>, <span class="number">10</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 不同参数组合</span></span><br><span class="line">    param_combinations = [</span><br><span class="line">        (<span class="number">0.1</span>, <span class="number">0.5</span>, <span class="string">&quot;低温+低p: 确定性高&quot;</span>),</span><br><span class="line">        (<span class="number">0.1</span>, <span class="number">0.9</span>, <span class="string">&quot;低温+高p: 确定性中&quot;</span>),</span><br><span class="line">        (<span class="number">1.0</span>, <span class="number">0.5</span>, <span class="string">&quot;常温+低p: 创造性中&quot;</span>),</span><br><span class="line">        (<span class="number">1.0</span>, <span class="number">0.9</span>, <span class="string">&quot;常温+高p: 创造性高&quot;</span>),</span><br><span class="line">        (<span class="number">2.0</span>, <span class="number">0.5</span>, <span class="string">&quot;高温+低p: 随机性中&quot;</span>),</span><br><span class="line">        (<span class="number">2.0</span>, <span class="number">0.9</span>, <span class="string">&quot;高温+高p: 随机性高&quot;</span>),</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> idx, (T, p, title) <span class="keyword">in</span> <span class="built_in">enumerate</span>(param_combinations):</span><br><span class="line">        ax = axes[idx // <span class="number">3</span>, idx % <span class="number">3</span>]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 应用温度</span></span><br><span class="line">        scaled_logits = logits / T</span><br><span class="line">        probs = softmax(scaled_logits)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 应用top-p</span></span><br><span class="line">        nucleus_indices, nucleus_probs = top_p_sampling(probs, p)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 可视化</span></span><br><span class="line">        all_probs = np.zeros_like(probs)</span><br><span class="line">        all_probs[nucleus_indices] = nucleus_probs</span><br><span class="line"></span><br><span class="line">        bars = ax.bar(<span class="built_in">range</span>(<span class="built_in">len</span>(all_probs)), all_probs, color=<span class="string">&#x27;skyblue&#x27;</span>)</span><br><span class="line">        <span class="comment"># 核内词标为红色</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> nucleus_indices:</span><br><span class="line">            bars[i].set_color(<span class="string">&#x27;lightcoral&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        ax.set_title(<span class="string">f&#x27;T=<span class="subst">&#123;T&#125;</span>, p=<span class="subst">&#123;p&#125;</span>\n<span class="subst">&#123;title&#125;</span>&#x27;</span>)</span><br><span class="line">        ax.set_xlabel(<span class="string">&#x27;Token Index&#x27;</span>)</span><br><span class="line">        ax.set_ylabel(<span class="string">&#x27;Probability&#x27;</span>)</span><br><span class="line">        ax.set_ylim(<span class="number">0</span>, <span class="built_in">max</span>(all_probs) * <span class="number">1.2</span>)</span><br><span class="line"></span><br><span class="line">    plt.tight_layout()</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line">visualize_combined_effect()</span><br></pre></td></tr></table></figure>
+
+<h3><span id="43-实际应用建议">4.3 实际应用建议</span></h3><p>在实际应用中，参数选择取决于具体任务：</p>
+<table>
+<thead>
+<tr>
+<th>任务类型</th>
+<th>推荐 Temperature</th>
+<th>推荐 Top-p</th>
+<th>数学原理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>代码生成</td>
+<td>0.1-0.3</td>
+<td>0.5-0.7</td>
+<td>低温减少随机性，中等 p 保证一定多样性</td>
+</tr>
+<tr>
+<td>事实问答</td>
+<td>0.1-0.3</td>
+<td>0.3-0.5</td>
+<td>低温高确定性，低 p 排除无关选项</td>
+</tr>
+<tr>
+<td>创意写作</td>
+<td>0.8-1.2</td>
+<td>0.9-1.0</td>
+<td>高温增加熵，高 p 扩大选择空间</td>
+</tr>
+<tr>
+<td>对话生成</td>
+<td>0.7-0.9</td>
+<td>0.8-0.95</td>
+<td>平衡确定性和创造性</td>
+</tr>
+</tbody></table>
+<h2><span id="五-高级话题参数选择的数学优化">五、高级话题：参数选择的数学优化</span></h2><h3><span id="51-基于熵的参数自动调整">5.1 基于熵的参数自动调整</span></h3><p>在实践中，我们可以根据生成任务自动调整参数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">adaptive_sampling</span>(<span class="params">logits, target_entropy=<span class="number">1.5</span>, min_temp=<span class="number">0.1</span>, max_temp=<span class="number">2.0</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;自适应调整温度以达到目标熵&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">entropy_at_temperature</span>(<span class="params">T</span>):</span><br><span class="line">        probs = softmax_with_temperature(logits, T)</span><br><span class="line">        <span class="keyword">return</span> compute_entropy(probs)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 二分查找找到达到目标熵的温度</span></span><br><span class="line">    low, high = min_temp, max_temp</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">20</span>):  <span class="comment"># 二分查找迭代</span></span><br><span class="line">        mid = (low + high) / <span class="number">2</span></span><br><span class="line">        current_entropy = entropy_at_temperature(mid)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> current_entropy &lt; target_entropy:</span><br><span class="line">            low = mid</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            high = mid</span><br><span class="line"></span><br><span class="line">    optimal_T = (low + high) / <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> optimal_T</span><br></pre></td></tr></table></figure>
+
+<h3><span id="52-温度退火策略">5.2 温度退火策略</span></h3><p>在生成长文本时，可以使用温度退火策略：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">temperature_annealing</span>(<span class="params">step, total_steps, start_temp=<span class="number">1.0</span>, end_temp=<span class="number">0.5</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;线性温度退火&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> start_temp - (start_temp - end_temp) * (step / total_steps)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cosine_annealing</span>(<span class="params">step, total_steps, start_temp=<span class="number">1.0</span>, end_temp=<span class="number">0.5</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;余弦退火，更平滑的温度变化&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> end_temp + <span class="number">0.5</span> * (start_temp - end_temp) * (<span class="number">1</span> + np.cos(np.pi * step / total_steps))</span><br></pre></td></tr></table></figure>
+
+<h2><span id="六-总结从公式到实践">六、总结：从公式到实践</span></h2><p>通过本文的数学之旅，我们深入理解了 Temperature 和 Top-p 这两个关键参数：</p>
+<ol>
+<li><strong>Temperature</strong> 通过对数空间的线性缩放，控制 Softmax 输出的概率分布的熵</li>
+<li><strong>Top-p</strong> 通过对概率分布的动态剪枝和重归一化，确保从高质量候选集中抽样</li>
+<li>两者结合，提供了从<strong>确定性</strong>到<strong>创造性</strong>的连续控制</li>
+</ol>
+<p>这些数学原理不仅仅是理论概念，它们直接指导着我们在实际应用中的参数选择：</p>
+<ul>
+<li>当你需要<strong>代码补全</strong>时，选择低温低 p，让 AI 专注于最可能的选项</li>
+<li>当你需要<strong>头脑风暴</strong>时，选择高温高 p，让 AI 探索更多可能性</li>
+<li>当你需要<strong>平衡回答</strong>时，选择中等参数，兼顾准确性和多样性</li>
+</ul>
+<p>理解这些底层数学原理，不仅能帮助你更好地使用现有的 AI 工具，还能为未来开发更先进的生成策略奠定基础。在 AI 文本生成的世界里，数学公式不再是冰冷的符号，而是创造力的调节器，思想的导航仪。<em>希望这篇深入的技术博客能帮助你真正理解 Temperature 和 Top-p 的数学之美。如果你有任何问题或想深入探讨某个方面，欢迎联系我！</em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://potoior.cn">potoior</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://potoior.cn/2026/01/16/Temperature%E5%92%8Ctop-p/">http://potoior.cn/2026/01/16/Temperature%E5%92%8Ctop-p/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://potoior.cn" target="_blank">potoior</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/img2.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/01/16/%E6%B5%81%E5%BC%8F%E8%BE%93%E5%87%BA%E6%8A%80%E6%9C%AF%E8%AF%A6%E8%A7%A3/" title="流式输出技术详解"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/img1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">流式输出技术详解</div></div><div class="info-2"><div class="info-item-1">Spring AI 项目中的流式输出技术详解 - 从入门到精通作为一名刚刚接触前端开发的小白，你可能会好奇：为什么有些网站上的 AI 聊天机器人能够像真人一样逐字打出回复，而不是一下子显示全部内容？这种技术被称为”流式输出”(Streaming Output)。今天我们就来详细讲解一下在 Spring AI 项目中，前端是如何实现这种酷炫效果的。 什么是流式输出？首先我们来理解一下什么是流式输出。想象一下你在喝水的时候，是一大口喝完还是一小口一小口慢慢品尝？显然，一小口一小口的方式让你更能感受到水的味道。流式输出也是同样的道理，它将完整的数据分成许多小块，逐一发送给客户端，这样用户就能看到内容逐渐显示出来的效果。 在传统的 Web 应用中，浏览器发送一个请求给服务器，然后等待服务器处理完毕并返回完整的结果。这种方式就像是一次性喝完一大杯水。而在流式输出中，服务器一旦产生部分结果就会立即发送给客户端，而不需要等待所有处理完成。这就像是一边过滤水一边喝，可以持续不断地享受。 流式输出的实际应用场景在我们的 Spring AI 项目中，流式输出主要用于以下几个场景：  AI 聊天机器人...</div></div></div></a><a class="pagination-related" href="/2026/01/16/skills%5Eagent/" title="多智能体与技能增强智能体：架构范式演进与选型指南"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/img4.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">多智能体与技能增强智能体：架构范式演进与选型指南</div></div><div class="info-2"><div class="info-item-1">多智能体与技能增强智能体：架构范式演进与选型指南引言：从”超级个体”到”专家团队”在人工智能的演进道路上，我们正经历着从单一智能体向复杂协作系统的范式转变。当开发者面临”应该构建一个全能助手，还是一个专家团队？”这一根本问题时，多智能体系统与技能增强智能体两种架构范式便成为核心考量。本文将深入探讨这两种范式的本质、优劣、应用场景与融合路径。 第一部分：技能增强智能体——构建超级个体1.1 核心架构与工作原理技能增强智能体（Agent+Skills）围绕一个核心智能体构建，通过扩展其工具能力来解决复杂任务。其架构遵循经典的”感知-规划-执行”循环：  感知层：智能体接收用户指令和上下文信息 规划层：通过思维链（Chain-of-Thought）或思维树（Tree-of-Thought）等技术分解任务 执行层：调用适当的工具（技能）完成子任务 整合层：将工具执行结果整合为最终响应  1234567891011121314151617181920# 简化的技能增强智能体工作流程示意class ToolAugmentedAgent:    def __init__(self, llm, ...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/tx.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">potoior</div><div class="author-info-description">一位半栈工程师</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/potoior"><i class="fab fa-github"></i><span>干了兄弟们</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/potoior" target="_blank" title=""><i class="GitHub"></i></a><a class="social-icon" href="mailto:2986486901@qq.com" target="_blank" title=""><i class="Email"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">立志做一名全栈工程师</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">解密 AI 文本生成的魔法旋钮：Temperature 与 Top-p 的数学原理详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">引言：为什么我们需要这些参数？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">一、起点：Softmax——从分数到概率的桥梁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">二、Temperature：概率分布的”热力学控制”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">2.1 直观理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">2.2 数学原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">2.3 温度效应的数学分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-text">1. 极限情况分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-text">2. 温度对概率分布的”锐化”效应</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-text">3. 温度不改变排序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">2.4 实际应用中的温度选择</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">三、Top-p（核采样）：动态剪枝的艺术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">3.1 为什么需要 Top-p？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">3.2 数学原理：从累积概率到核集合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">3.3 数学公式详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">3.4 Top-p 的数学特性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-text">1. 自适应核大小</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-text">2. 概率质量保证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-text">3. 与 Temperature 的协同作用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">3.5 为什么 Top-p 优于 Top-k？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">四、联合效应：Temperature 与 Top-p 的协同工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">4.1 完整的数学管道</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">4.2 可视化联合效应</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">4.3 实际应用建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">五、高级话题：参数选择的数学优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">5.1 基于熵的参数自动调整</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">5.2 温度退火策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">六、总结：从公式到实践</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By potoior</span></div><div class="footer_custom_text"><a href="https://beian.miit.gov.cn" target="_blank">鄂ICP备2025152739号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="30" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

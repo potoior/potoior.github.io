@@ -1,0 +1,233 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>流式输出技术详解 | potoior</title><meta name="author" content="potoior"><meta name="copyright" content="potoior"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="流式输出技术详解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="流式输出技术详解">
+<meta property="og:url" content="http://potoior.cn/2026/01/16/%E6%B5%81%E5%BC%8F%E8%BE%93%E5%87%BA%E6%8A%80%E6%9C%AF%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="potoior">
+<meta property="og:description" content="流式输出技术详解">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://potoior.cn/img/img1.png">
+<meta property="article:published_time" content="2026-01-16T11:16:21.208Z">
+<meta property="article:modified_time" content="2025-11-25T12:47:41.000Z">
+<meta property="article:author" content="potoior">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://potoior.cn/img/img1.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "流式输出技术详解",
+  "url": "http://potoior.cn/2026/01/16/%E6%B5%81%E5%BC%8F%E8%BE%93%E5%87%BA%E6%8A%80%E6%9C%AF%E8%AF%A6%E8%A7%A3/",
+  "image": "http://potoior.cn/img/img1.png",
+  "datePublished": "2026-01-16T11:16:21.208Z",
+  "dateModified": "2025-11-25T12:47:41.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "potoior",
+      "url": "http://potoior.cn"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://potoior.cn/2026/01/16/%E6%B5%81%E5%BC%8F%E8%BE%93%E5%87%BA%E6%8A%80%E6%9C%AF%E8%AF%A6%E8%A7%A3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const hour = new Date().getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (theme === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else theme === 'light' ? activateLightMode() : activateDarkMode()
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"top-right"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '流式输出技术详解',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="baidu-site-verification" content="codeva-BMzky3Zrzt" /><meta name="generator" content="Hexo 8.0.0"></head><body><div id="web_bg" style="background-image: url(/img/bg.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/tx.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post type-vue,java" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/img1.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">potoior</span></a><a class="nav-page-title" href="/"><span class="site-name">流式输出技术详解</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">流式输出技术详解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-01-16T11:16:21.208Z" title="发表于 2026-01-16 19:16:21">2026-01-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-25T12:47:41.000Z" title="更新于 2025-11-25 20:47:41">2025-11-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/vue/">vue</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/vue/java/">java</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;It has been&quot;,&quot;messageNext&quot;:&quot;days since the last update, the content of the article may be outdated.&quot;,&quot;postUpdate&quot;:&quot;2025-11-25 20:47:41&quot;}" hidden></div><h1><span id="spring-ai-项目中的流式输出技术详解-从入门到精通">Spring AI 项目中的流式输出技术详解 - 从入门到精通</span></h1><p>作为一名刚刚接触前端开发的小白，你可能会好奇：为什么有些网站上的 AI 聊天机器人能够像真人一样逐字打出回复，而不是一下子显示全部内容？这种技术被称为”流式输出”(Streaming Output)。今天我们就来详细讲解一下在 Spring AI 项目中，前端是如何实现这种酷炫效果的。</p>
+<h2><span id="什么是流式输出">什么是流式输出？</span></h2><p>首先我们来理解一下什么是流式输出。想象一下你在喝水的时候，是一大口喝完还是一小口一小口慢慢品尝？显然，一小口一小口的方式让你更能感受到水的味道。流式输出也是同样的道理，它将完整的数据分成许多小块，逐一发送给客户端，这样用户就能看到内容逐渐显示出来的效果。</p>
+<p>在传统的 Web 应用中，浏览器发送一个请求给服务器，然后等待服务器处理完毕并返回完整的结果。这种方式就像是一次性喝完一大杯水。而在流式输出中，服务器一旦产生部分结果就会立即发送给客户端，而不需要等待所有处理完成。这就像是一边过滤水一边喝，可以持续不断地享受。</p>
+<h2><span id="流式输出的实际应用场景">流式输出的实际应用场景</span></h2><p>在我们的 Spring AI 项目中，流式输出主要用于以下几个场景：</p>
+<ol>
+<li><strong>AI 聊天机器人</strong>：当你向 AI 提问时，AI 的回答会逐字逐句地显示出来，就像真人打字一样</li>
+<li><strong>PDF 文档问答</strong>：当 AI 分析 PDF 文档并回答问题时，答案会逐步呈现</li>
+<li><strong>智能客服系统</strong>：客服机器人的回复也会以流式方式展现</li>
+<li><strong>游戏化聊天</strong>：游戏中 AI 角色的回复同样采用流式输出</li>
+</ol>
+<h2><span id="流式输出的技术实现原理">流式输出的技术实现原理</span></h2><p>接下来，我们来深入了解流式输出的具体实现方式。</p>
+<h3><span id="后端实现原理">后端实现原理</span></h3><p>在 Spring AI 项目的后端，我们使用了 Spring WebFlux 框架提供的响应式编程模型。这是一种异步非阻塞的编程范式，非常适合处理流式数据。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 示例：后端控制器返回Flux流</span></span><br><span class="line"><span class="meta">@PostMapping(&quot;/chat&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Flux&lt;String&gt; <span class="title function_">chat</span><span class="params">(<span class="meta">@RequestBody</span> Message message)</span> &#123;</span><br><span class="line">    <span class="comment">// Flux是一种数据流，可以持续发送多个数据项</span></span><br><span class="line">    <span class="keyword">return</span> aiService.processMessage(message);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的<code>Flux&lt;String&gt;</code>就是一种数据流，它可以在处理过程中不断产生字符串片段并发送给前端，而不需要等待整个处理过程完成。</p>
+<h3><span id="前端实现原理">前端实现原理</span></h3><p>前端实现流式输出主要依靠现代浏览器提供的 Fetch API 和 ReadableStream 接口。让我们一步步来看具体实现：</p>
+<h4><span id="第一步建立连接并获取数据流">第一步：建立连接并获取数据流</span></h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 向服务器发起请求并获取响应</span></span><br><span class="line"><span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&#x27;/api/chat&#x27;</span>, &#123;</span><br><span class="line">	<span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">	<span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123; <span class="attr">message</span>: <span class="string">&#x27;你好，AI!&#x27;</span> &#125;),</span><br><span class="line">	<span class="attr">headers</span>: &#123; <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span> &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从响应中获取可读数据流</span></span><br><span class="line"><span class="keyword">const</span> reader = response.<span class="property">body</span>.<span class="title function_">getReader</span>();</span><br></pre></td></tr></table></figure>
+
+<h4><span id="第二步持续读取数据流">第二步：持续读取数据流</span></h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建文本解码器</span></span><br><span class="line"><span class="keyword">const</span> decoder = <span class="keyword">new</span> <span class="title class_">TextDecoder</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 循环读取数据</span></span><br><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">	<span class="comment">// 读取下一个数据块</span></span><br><span class="line">	<span class="keyword">const</span> &#123; value, done &#125; = <span class="keyword">await</span> reader.<span class="title function_">read</span>();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 如果读取完成，则退出循环</span></span><br><span class="line">	<span class="keyword">if</span> (done) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 将字节数据解码为文本</span></span><br><span class="line">	<span class="keyword">const</span> text = decoder.<span class="title function_">decode</span>(value);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 将新文本追加到已有内容中</span></span><br><span class="line">	accumulatedContent += text;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 更新界面上的显示内容</span></span><br><span class="line">	<span class="title function_">updateDisplay</span>(accumulatedContent);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4><span id="第三步实时更新界面">第三步：实时更新界面</span></h4><p>每当读取到新的数据块时，前端会立即更新聊天界面中的消息内容，这样用户就能看到内容逐渐出现的效果。</p>
+<h2><span id="项目中的具体实现分析">项目中的具体实现分析</span></h2><p>现在让我们通过具体的代码来看看 Spring AI 项目是如何实现流式输出的。</p>
+<h3><span id="1-api-服务层实现">1. API 服务层实现</span></h3><p>在<a href="file:///D:/Desktop/copy/heima-spring-ai/spring-ai-protal/spring-ai-protal/src/services/api.js">api.js</a>文件中，我们可以看到 API 调用的封装：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="title function_">sendMessage</span>(<span class="params">data, chatId</span>) &#123;</span><br><span class="line">  <span class="comment">// 发起POST请求</span></span><br><span class="line">  <span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&#x27;/ai/chat&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="attr">body</span>: data <span class="keyword">instanceof</span> <span class="title class_">FormData</span> ? data :</span><br><span class="line">      <span class="keyword">new</span> <span class="title class_">URLSearchParams</span>(&#123; <span class="attr">prompt</span>: data &#125;)</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 返回可读流的读取器</span></span><br><span class="line">  <span class="keyword">return</span> response.<span class="property">body</span>.<span class="title function_">getReader</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码的关键在于最后一行，它返回的是一个<code>ReadableStreamDefaultReader</code>对象，而不是直接的文本内容。这个读取器允许我们逐块读取服务器返回的数据。</p>
+<h3><span id="2-聊天组件中的流式处理">2. 聊天组件中的流式处理</span></h3><p>在<a href="file:///D:/Desktop/copy/heima-spring-ai/spring-ai-protal/spring-ai-protal/src/views/AIChat.vue">AIChat.vue</a>组件中，我们可以看到完整的流式处理逻辑：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">sendMessage</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">	<span class="comment">// ... 其他代码</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="comment">// 获取数据流读取器</span></span><br><span class="line">		<span class="keyword">const</span> reader = <span class="keyword">await</span> chatAPI.<span class="title function_">sendMessage</span>(formData, currentChatId.<span class="property">value</span>);</span><br><span class="line">		<span class="keyword">const</span> decoder = <span class="keyword">new</span> <span class="title class_">TextDecoder</span>(<span class="string">&#x27;utf-8&#x27;</span>);</span><br><span class="line">		<span class="keyword">let</span> accumulatedContent = <span class="string">&#x27;&#x27;</span>; <span class="comment">// 用于累积接收到的内容</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 循环读取数据流</span></span><br><span class="line">		<span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">			<span class="keyword">const</span> &#123; value, done &#125; = <span class="keyword">await</span> reader.<span class="title function_">read</span>();</span><br><span class="line">			<span class="keyword">if</span> (done) <span class="keyword">break</span>; <span class="comment">// 如果读取完成则退出</span></span><br><span class="line"></span><br><span class="line">			<span class="comment">// 解码并累积新内容</span></span><br><span class="line">			accumulatedContent += decoder.<span class="title function_">decode</span>(value);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 更新界面上的消息内容</span></span><br><span class="line">			<span class="keyword">await</span> <span class="title function_">nextTick</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">const</span> updatedMessage = &#123;</span><br><span class="line">					...assistantMessage,</span><br><span class="line">					<span class="attr">content</span>: accumulatedContent,</span><br><span class="line">				&#125;;</span><br><span class="line">				<span class="keyword">const</span> lastIndex = currentMessages.<span class="property">value</span>.<span class="property">length</span> - <span class="number">1</span>;</span><br><span class="line">				currentMessages.<span class="property">value</span>.<span class="title function_">splice</span>(lastIndex, <span class="number">1</span>, updatedMessage);</span><br><span class="line">			&#125;);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 滚动到聊天底部，确保最新内容可见</span></span><br><span class="line">			<span class="keyword">await</span> <span class="title function_">scrollToBottom</span>();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">		<span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;发送消息失败:&#x27;</span>, error);</span><br><span class="line">	&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">		isStreaming.<span class="property">value</span> = <span class="literal">false</span>; <span class="comment">// 标记流式传输结束</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码实现了完整的流式输出处理流程：</p>
+<ol>
+<li>首先获取数据流读取器</li>
+<li>创建文本解码器用于处理字节数据</li>
+<li>准备一个变量用于累积接收到的内容</li>
+<li>通过 while 循环持续读取数据块</li>
+<li>每读取一块数据就解码并追加到累积内容中</li>
+<li>更新 Vue 组件的数据，触发界面重新渲染</li>
+<li>自动滚动到聊天记录底部</li>
+<li>处理完成或出错时清理状态</li>
+</ol>
+<h3><span id="3-界面组件的配合">3. 界面组件的配合</span></h3><p>为了让流式输出有更好的视觉效果，<a href="file:///D:/Desktop/copy/heima-spring-ai/spring-ai-protal/spring-ai-protal/src/components/ChatMessage.vue">ChatMessage.vue</a>组件也做了相应处理：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">	&lt;div class=&quot;message&quot;&gt;</span><br><span class="line">		&lt;!-- 头像和其他内容 --&gt;</span><br><span class="line">		&lt;div class=&quot;content&quot;&gt;</span><br><span class="line">			&lt;!-- 使用v-html直接渲染处理后的内容 --&gt;</span><br><span class="line">			&lt;div class=&quot;text markdown-content&quot; v-html=&quot;processedContent&quot;&gt;&lt;/div&gt;</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">	import &#123; computed, nextTick &#125; from &#x27;vue&#x27;;</span><br><span class="line">	import &#123; marked &#125; from &#x27;marked&#x27;; // Markdown解析库</span><br><span class="line"></span><br><span class="line">	// 处理内容，支持Markdown语法</span><br><span class="line">	const processedContent = computed(() =&gt; &#123;</span><br><span class="line">		if (!props.message.content) return &#x27;&#x27;;</span><br><span class="line">		// 将Markdown文本转换为HTML</span><br><span class="line">		return marked.parse(props.message.content);</span><br><span class="line">	&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这个组件会在每次消息内容更新时自动重新计算并渲染 Markdown 格式的内容，使得 AI 回复中的代码块、列表、链接等都能正确显示。</p>
+<h2><span id="流式输出的优势">流式输出的优势</span></h2><p>使用流式输出技术带来了许多好处：</p>
+<h3><span id="1-更好的用户体验">1. 更好的用户体验</span></h3><p>用户不需要等待漫长的处理时间，而是可以看到 AI”思考”和”打字”的过程，这种体验更加自然和友好。</p>
+<h3><span id="2-更快的感知速度">2. 更快的感知速度</span></h3><p>即使总的响应时间相同，流式输出也能让用户感觉响应更快，因为他们在等待过程中能看到部分内容。</p>
+<h3><span id="3-更低的内存占用">3. 更低的内存占用</span></h3><p>服务器不需要等待整个响应生成完毕再发送，而是可以边生成边发送，降低了内存占用。</p>
+<h3><span id="4-实时交互能力">4. 实时交互能力</span></h3><p>流式输出为实现实时交互功能奠定了基础，比如实时翻译、实时代码生成等高级功能。</p>
+<h2><span id="如何在自己的项目中实现流式输出">如何在自己的项目中实现流式输出</span></h2><p>如果你想在自己的项目中实现类似的流式输出效果，可以按照以下步骤进行：</p>
+<h3><span id="后端实现要点">后端实现要点：</span></h3><ol>
+<li>使用支持响应式编程的框架（如 Spring WebFlux、Node.js 等）</li>
+<li>返回数据流而不是完整结果</li>
+<li>在处理过程中及时推送中间结果</li>
+</ol>
+<h3><span id="前端实现要点">前端实现要点：</span></h3><ol>
+<li>使用 Fetch API 获取响应的 ReadableStream</li>
+<li>循环读取数据块并实时更新界面</li>
+<li>注意处理编码和错误情况</li>
+<li>提供良好的用户反馈（如加载状态、错误提示等）</li>
+</ol>
+<h2><span id="总结">总结</span></h2><p>流式输出是一项提升用户体验的重要技术，在现代 Web 应用中越来越常见。通过本文的介绍，你应该已经了解了：</p>
+<ol>
+<li>什么是流式输出及其优势</li>
+<li>Spring AI 项目中流式输出的实现原理</li>
+<li>前后端如何协同工作实现流式输出</li>
+<li>流式输出在实际项目中的应用</li>
+</ol>
+<p>希望这篇详细的介绍能帮助你理解流式输出技术。虽然实现细节看起来可能有些复杂，但核心思想其实很简单：就是把一大块数据分成小块，一边产生一边发送，让用户体验更加流畅自然。随着你对前端开发的进一步学习，相信你会更好地掌握这项技术！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://potoior.cn">potoior</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://potoior.cn/2026/01/16/%E6%B5%81%E5%BC%8F%E8%BE%93%E5%87%BA%E6%8A%80%E6%9C%AF%E8%AF%A6%E8%A7%A3/">http://potoior.cn/2026/01/16/%E6%B5%81%E5%BC%8F%E8%BE%93%E5%87%BA%E6%8A%80%E6%9C%AF%E8%AF%A6%E8%A7%A3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://potoior.cn" target="_blank">potoior</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/img1.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/01/16/%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/" title="跨域问题详解"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/img3.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">跨域问题详解</div></div><div class="info-2"><div class="info-item-1">为什么数字参数不跨域，而编码后的参数却跨域了？—— 深入理解 CORS 简单请求与复杂请求引言最近在项目中遇到了一个奇怪的问题：删除文件接口，当传递数字 ID 时可以正常访问，但传递编码后的文件路径时却出现了跨域错误。这个问题困扰了团队一段时间，最终发现根源在于浏览器对 CORS（跨域资源共享）请求的分类处理。本文将深入探讨这一现象背后的原理和解决方案。 问题现象前端有两个看似相似的请求，结果却截然不同： 12345678910111213141516// 情况1：传递数字 - 正常执行export function removeFile1() &#123;	return request(&#123;		url: &#x27;/api/deleFile/&#x27; + 123, // 纯数字		method: &#x27;delete&#x27;,	&#125;);&#125;// 情况2：传递编码路径 - 跨域错误export function removeFile2(fileName) &#123;	return request(&#123;		url: &#x27;/ap...</div></div></div></a><a class="pagination-related" href="/2026/01/16/Temperature%E5%92%8Ctop-p/" title="Temperature 与 Top-p 的数学原理详解"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/img2.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Temperature 与 Top-p 的数学原理详解</div></div><div class="info-2"><div class="info-item-1">解密 AI 文本生成的魔法旋钮：Temperature 与 Top-p 的数学原理详解 在 AI 文本生成的神秘世界中，两个看似简单的参数控制着创意与逻辑的平衡——理解它们背后的数学，才能真正掌握生成式 AI 的艺术。  引言：为什么我们需要这些参数？当你与 ChatGPT 对话时，你是否曾想过，为什么它有时回答得严谨准确，有时又创意飞扬？这背后有两个关键的调控参数：Temperature和Top-p（核采样）。它们像是 AI 创作的“调音台”，一个控制创意的“温度”，一个控制选择的“广度”。 本文将从最基础的数学公式出发，带你深入理解这两个参数如何从底层塑造 AI 的每一次回应。 一、起点：Softmax——从分数到概率的桥梁要理解 Temperature 和 Top-p，我们必须先了解它们操作的对象：Softmax 函数。 想象一下，AI 模型在预测下一个词时，会对词汇表中的每个词计算一个原始分数（logits）。这些分数就像学生在考试中获得的原始分，可能有正有负，数值范围各异。 Softmax 函数的作用就是将这一组原始分数转化为概率分布： 1234567891011121...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/tx.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">potoior</div><div class="author-info-description">一位半栈工程师</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/potoior"><i class="fab fa-github"></i><span>干了兄弟们</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/potoior" target="_blank" title=""><i class="GitHub"></i></a><a class="social-icon" href="mailto:2986486901@qq.com" target="_blank" title=""><i class="Email"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">立志做一名全栈工程师</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">Spring AI 项目中的流式输出技术详解 - 从入门到精通</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">什么是流式输出？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">流式输出的实际应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">流式输出的技术实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">后端实现原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">前端实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-text">第一步：建立连接并获取数据流</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-text">第二步：持续读取数据流</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-text">第三步：实时更新界面</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">项目中的具体实现分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">1. API 服务层实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">2. 聊天组件中的流式处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">3. 界面组件的配合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">流式输出的优势</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">1. 更好的用户体验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">2. 更快的感知速度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">3. 更低的内存占用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">4. 实时交互能力</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">如何在自己的项目中实现流式输出</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">后端实现要点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">前端实现要点：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">总结</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By potoior</span></div><div class="footer_custom_text"><a href="https://beian.miit.gov.cn" target="_blank">鄂ICP备2025152739号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="30" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
