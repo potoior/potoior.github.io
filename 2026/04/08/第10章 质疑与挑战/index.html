@@ -1,0 +1,255 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>第10章 质疑与挑战 | potoior</title><meta name="author" content="potoior"><meta name="copyright" content="potoior"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="第10章 质疑与挑战">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第10章 质疑与挑战">
+<meta property="og:url" content="http://potoior.cn/2026/04/08/%E7%AC%AC10%E7%AB%A0%20%E8%B4%A8%E7%96%91%E4%B8%8E%E6%8C%91%E6%88%98/index.html">
+<meta property="og:site_name" content="potoior">
+<meta property="og:description" content="第10章 质疑与挑战">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://potoior.cn/img/img2.jpg">
+<meta property="article:published_time" content="2026-04-08T13:10:52.685Z">
+<meta property="article:modified_time" content="2026-04-07T16:00:00.000Z">
+<meta property="article:author" content="potoior">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://potoior.cn/img/img2.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "第10章 质疑与挑战",
+  "url": "http://potoior.cn/2026/04/08/%E7%AC%AC10%E7%AB%A0%20%E8%B4%A8%E7%96%91%E4%B8%8E%E6%8C%91%E6%88%98/",
+  "image": "http://potoior.cn/img/img2.jpg",
+  "datePublished": "2026-04-08T13:10:52.685Z",
+  "dateModified": "2026-04-07T16:00:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "potoior",
+      "url": "http://potoior.cn"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://potoior.cn/2026/04/08/%E7%AC%AC10%E7%AB%A0%20%E8%B4%A8%E7%96%91%E4%B8%8E%E6%8C%91%E6%88%98/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const hour = new Date().getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (theme === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else theme === 'light' ? activateLightMode() : activateDarkMode()
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"top-right"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '第10章 质疑与挑战',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="baidu-site-verification" content="codeva-BMzky3Zrzt" /><meta name="generator" content="Hexo 8.0.0"></head><body><div id="web_bg" style="background-image: url(/img/bg.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/tx.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post type-全球 token 失效，我是古法 coding 唯一传人" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/img2.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">potoior</span></a><a class="nav-page-title" href="/"><span class="site-name">第10章 质疑与挑战</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 列表</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope-open"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">第10章 质疑与挑战</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-08T13:10:52.685Z" title="发表于 2026-04-08 21:10:52">2026-04-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-07T16:00:00.000Z" title="更新于 2026-04-08 00:00:00">2026-04-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%85%A8%E7%90%83-token-%E5%A4%B1%E6%95%88%EF%BC%8C%E6%88%91%E6%98%AF%E5%8F%A4%E6%B3%95-coding-%E5%94%AF%E4%B8%80%E4%BC%A0%E4%BA%BA/">全球 token 失效，我是古法 coding 唯一传人</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;It has been&quot;,&quot;messageNext&quot;:&quot;days since the last update, the content of the article may be outdated.&quot;,&quot;postUpdate&quot;:&quot;2026-04-08 00:00:00&quot;}" hidden></div><h1><span id="第10章-质疑与挑战">第10章 质疑与挑战</span></h1><h2><span id="一">一</span></h2><p>第45天。</p>
+<p>随着代码重建计划的推进，社会逐渐恢复了正常运转。</p>
+<p>电力、金融、交通、通信等关键基础设施已经稳定运行，普通人的生活似乎回到了正轨。</p>
+<p>但危机并没有完全解除。</p>
+<p>更多的问题开始浮现。</p>
+<p>“张子烨的方法太慢了！”</p>
+<p>“培养一个手写程序员需要几个月，我们等不起！”</p>
+<p>“为什么不能直接恢复AI系统？”</p>
+<p>“手写代码是倒退，我们应该向前看！”</p>
+<p>质疑的声音开始出现。</p>
+<p>一些科技公司的CEO公开批评张子烨的做法，认为他是在”开历史的倒车”。</p>
+<p>“AI是未来的趋势， handwriting code 是过时的技术，”某知名科技媒体的总编在电视节目中说，”张子烨的做法虽然解决了眼前的问题，但长远来看会阻碍技术进步。”</p>
+<p>“我们应该集中精力修复AI系统，而不是让人类回到手工劳动的时代。”</p>
+<p>这些声音得到了不少人的支持。</p>
+<p>毕竟，AI编程的便利性是有目共睹的，一旦习惯了，就很难再回到手写代码的”艰苦岁月”。</p>
+<h2><span id="二">二</span></h2><p>第50天。</p>
+<p>一个更大的挑战出现了。</p>
+<p>一家名为”新智元”的科技公司宣布，他们成功研发出了一种”离线AI编程工具”。</p>
+<p>“不需要Token，不需要联网，只需要在本地运行，就能生成高质量的代码！”</p>
+<p>“ handwriting code 的时代结束了，AI编程的新时代即将到来！”</p>
+<p>消息一出，整个科技圈都沸腾了。</p>
+<p>人们看到了希望——也许不需要辛苦学习手写代码，就能恢复AI的便利。</p>
+<p>“新智元”的CEO李智在发布会上意气风发：</p>
+<p>“我们的技术完全独立于原来的AI系统，不受Token失效的影响。”</p>
+<p>“而且，我们的AI比之前的更强大，生成的代码质量更高，Bug更少。”</p>
+<p>“从今天起，程序员可以重新用自然语言描述需求，让AI生成代码。”</p>
+<p>“ handwriting code？那是低效的做法，应该被淘汰！”</p>
+<p>发布会结束后，”新智元”的股票暴涨，无数公司争相购买他们的产品。</p>
+<p>张子烨的”代码筑基计划”瞬间陷入了尴尬境地。</p>
+<p>“张总，我们该怎么办？”助手焦急地问，”很多学员都想退课，说要去学新智元的工具。”</p>
+<p>张子烨沉默了很久。</p>
+<p>然后他说：”让他们去。”</p>
+<p>“啊？”</p>
+<p>“真金不怕火炼。如果新智元的工具真的好用，那说明 handwriting code 确实不是唯一的选择。”</p>
+<p>“但如果……”他的眼中闪过一丝忧虑，”如果历史重演呢？”</p>
+<h2><span id="三">三</span></h2><p>第55天。</p>
+<p>“新智元”的工具开始大规模推广。</p>
+<p>起初，一切看起来都很美好。</p>
+<p>程序员们重新用上了AI辅助，效率大幅提升。</p>
+<p>公司们重新启动了停滞的项目，业务开始恢复增长。</p>
+<p>人们欢呼雀跃，认为危机终于过去了。</p>
+<p>但张子烨保持警惕。</p>
+<p>他仔细研究了”新智元”的技术文档，发现了一个令人不安的事实——</p>
+<p>“新智元”的AI虽然运行在本地，但它生成的代码仍然依赖一个特殊的运行时库。</p>
+<p>“这个运行时库是谁控制的？”张子烨问。</p>
+<p>“新智元公司，”技术专家回答，”他们拥有完全的控制权。”</p>
+<p>“如果’新智元’公司出问题了呢？”</p>
+<p>技术专家愣住了。</p>
+<p>“你的意思是……”</p>
+<p>“历史可能会重演，”张子烨说，”只不过这次控制代码生死的，从’Token’变成了’新智元’。”</p>
+<p>“如果’新智元’倒闭了，或者被黑客攻击了，或者出于某种原因停止服务了，所有依赖他们工具的代码都会再次崩溃。”</p>
+<p>“这和之前的Token危机有什么区别？”</p>
+<p>技术专家沉默了。</p>
+<h2><span id="四">四</span></h2><p>第60天。</p>
+<p>张子烨的预言不幸成真。</p>
+<p>“新智元”的CEO李智在一次商业纠纷中被曝出财务造假，公司股价暴跌，资金链断裂。</p>
+<p>更糟糕的是，公司的核心服务器遭到黑客攻击，运行时库的密钥被泄露。</p>
+<p>“新智元”被迫紧急下线所有服务，进行安全整改。</p>
+<p>而那些依赖他们工具的代码——数百万行刚刚生成的代码——再次陷入了无法运行的困境。</p>
+<p>“怎么会这样……”</p>
+<p>“我们又被骗了……”</p>
+<p>“ handwriting code 才是唯一的出路吗？”</p>
+<p>人们再次陷入恐慌。</p>
+<p>但这次，他们终于开始理解张子烨的良苦用心。</p>
+<h2><span id="五">五</span></h2><p>第62天。</p>
+<p>张子烨被邀请参加一个全国性的技术峰会，主题就是”AI与 handwriting code 的关系”。</p>
+<p>这是他第一次正面回应质疑。</p>
+<p>“各位，”他站在讲台上，面对着台下数千名听众，”我知道很多人对我有质疑，认为 handwriting code 是倒退，是阻碍进步。”</p>
+<p>“今天，我想谈谈我的真实想法。”</p>
+<p>“首先，我不反对AI。”</p>
+<p>台下一片哗然。</p>
+<p>“是的，我不反对AI。AI是伟大的技术，它可以提高效率，降低门槛，让更多人参与到编程中来。”</p>
+<p>“但是，”他话锋一转，”我反对过度依赖AI。”</p>
+<p>“过度依赖AI，会让我们失去思考的能力，失去理解的能力，失去创造的能力。”</p>
+<p>“当AI正常工作时，一切都很美好。但当AI失效时，我们就会像婴儿一样无助。”</p>
+<p>“ handwriting code 不是为了倒退，而是为了掌握主动权。”</p>
+<p>“只有当我们理解代码的本质，才能真正驾驭AI，而不是被AI驾驭。”</p>
+<p>“这就像开车——自动驾驶很方便，但司机仍然需要学会手动驾驶，需要理解交通规则，需要知道车辆的工作原理。”</p>
+<p>“不是为了回到过去，而是为了应对未来的不确定性。”</p>
+<p>台下响起热烈的掌声。</p>
+<p>“最后，”张子烨说，”我想说， handwriting code 和AI不是对立的，而是互补的。”</p>
+<p>“ handwriting code 是我们的根基，是我们的底气；AI是我们的工具，是我们的翅膀。”</p>
+<p>“只有根基扎实，翅膀才能带我们飞得更高、更远。”</p>
+<p>“这就是’代码之道’——根基与工具并重，人与技术共生。”</p>
+<p>演讲结束，全场起立鼓掌。</p>
+<p>张子烨知道，他终于说服了大多数人。</p>
+<p>handwriting code 的传承，将继续下去。</p>
+<p>而AI，也将在更健康的轨道上发展。</p>
+<p>这才是真正的胜利。</p>
+<hr>
+<p><strong>【本章完】</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://potoior.cn">potoior</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://potoior.cn/2026/04/08/%E7%AC%AC10%E7%AB%A0%20%E8%B4%A8%E7%96%91%E4%B8%8E%E6%8C%91%E6%88%98/">http://potoior.cn/2026/04/08/%E7%AC%AC10%E7%AB%A0%20%E8%B4%A8%E7%96%91%E4%B8%8E%E6%8C%91%E6%88%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://potoior.cn" target="_blank">potoior</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/img2.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/04/08/%E7%AC%AC33%E7%AB%A0%20%E4%BB%A3%E7%A0%81%E5%9E%83%E5%9C%BE%E5%9C%BA/" title="第33章 代码垃圾场"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/img4.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">第33章 代码垃圾场</div></div><div class="info-2"><div class="info-item-1">第33章 代码垃圾场一第850天。 “深渊代码”的危机解除，但留下了一个严重的问题——“代码垃圾场”。 在战斗过程中，无数被破坏的代码、被感染的程序、被废弃的系统，堆积在网络中，形成了一个巨大的”数字废墟”。 这些”垃圾代码”不会自行消失，它们占用资源，产生干扰，甚至可能再次变异，产生新的威胁。 “我们必须清理这些垃圾，”张子烨在战略会议上说，”否则，它们会成为新的隐患。” “但如何清理？”有人问，”这些代码分布在全球各地，数量庞大，而且很多已经损坏，无法识别。” “这是一个前所未有的工程。” 张子烨沉思片刻，然后说：”我们需要建立’数字环保’体系。” 二第860天。 “数字环保计划”启动。 这个计划包括三个层面： 第一，清理层面——开发自动化的”代码清理工具”，识别并安全删除废弃代码。 第二，回收层面——从废弃代码中提取有价值的部分，进行重构和再利用。 第三，预防层面——建立代码生命周期管理机制，防止新的代码垃圾产生。 “这就像现实世界的环保，”张子烨解释道，”我们不能只生产不清理，要建立可持续的循环。” “每一行代码，从诞生到消亡，都要有明确的管理。” 计划开始实施。 人类和...</div></div></div></a><a class="pagination-related" href="/2026/04/08/%E7%AC%AC2%E7%AB%A0%20%E7%81%B5%E7%A0%81%E6%97%B6%E4%BB%A3/" title="第2章 灵码时代"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/img3.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">第2章 灵码时代</div></div><div class="info-2"><div class="info-item-1">第2章 灵码时代一晚上八点，张子烨推开家门。 这是一套位于北京西郊的老式四合院，青砖灰瓦，朱漆大门，与周围的高楼大厦格格不入。张家的祖宅，传承了五代人。 “回来了？”母亲从厨房探出头，”洗手吃饭，你爸在书房等你。” 张子烨放下背包，先去书房请安。 书房里，张守道正坐在一张古朴的红木书桌前，面前摊开着一本泛黄的线装书。书的封面上用毛笔写着四个大字：《代码筑基经》。 “爸。”张子烨轻声唤道。 张守道抬起头，六十岁的脸上布满了岁月的痕迹，但一双眼睛依然锐利如鹰。 “今日修行如何？” “手写 LRU 缓存，耗时四十分钟。”张子烨如实汇报。 张守道点点头：”可有依赖外物？” “没有，纯手写。” “好。”张守道合上手中的书，”来，陪我下盘棋。” 书房的角落里摆着一张围棋盘，黑白两色的棋子在灯光下泛着温润的光泽。 这是张家的传统——每日对弈，锤炼心性。 张子烨在父亲对面坐下，执黑先行。 二“听说你们公司要淘汰手写程序员？”张守道落下一子，语气平淡。 张子烨的手顿了一下：”您怎么知道？” “今日浏览新闻看到的。”张守道指着书桌上的平板电脑，”说是字节跳动准备全面推广’灵码 3.0’，以后普通程序...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/tx.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">potoior</div><div class="author-info-description">一位半栈工程师</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/potoior"><i class="fab fa-github"></i><span>干了兄弟们</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/potoior" target="_blank" title=""><i class="GitHub"></i></a><a class="social-icon" href="mailto:2986486901@qq.com" target="_blank" title=""><i class="Email"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">立志做一名全栈工程师</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">第10章 质疑与挑战</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">二</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">三</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">四</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">五</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By potoior</span></div><div class="footer_custom_text"><a href="https://beian.miit.gov.cn" target="_blank">鄂ICP备2025152739号</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="30" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
